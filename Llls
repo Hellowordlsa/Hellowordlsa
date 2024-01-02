@@ -5867,7 +5867,7 @@ local NotiFrame = Instance.new("Frame")
 
 
 
- Hub.Name = " "
+ Hub.Name = "                  🎆 Happy New Year! "
 
 
 
@@ -5923,7 +5923,7 @@ local NotiFrame = Instance.new("Frame")
 
 
 
- Hub.Text = " "
+ Hub.Text = "                  🎆 Happy New Year! "
 
 
 
@@ -54320,6 +54320,84 @@ Main:Toggle("Skill Z",true,function(a)
 
 
 	end)
+	
+	
+	Main:Toggle("Skill F",false,function(a)
+
+
+
+
+
+
+
+		_G.SkillF= a
+
+
+
+
+
+
+
+	end)
+	
+	
+	if _G.SkillF then
+
+
+
+
+
+
+
+   local args = {
+
+
+
+
+
+
+
+    [1] = PosMonMasteryFruit.Position
+
+
+
+
+
+
+
+   }
+
+
+
+
+
+
+
+   game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool").Name].RemoteEvent:FireServer(unpack(args))
+
+
+
+
+
+
+
+   game:GetService("VirtualInputManager"):SendKeyEvent(true,"F",false,game)
+
+
+
+
+
+
+
+   game:GetService("VirtualInputManager"):SendKeyEvent(false,"F",false,game)
+
+
+
+
+
+
+
+   end
 
 
 
@@ -64087,7 +64165,7 @@ end)
 
 
 
-Weapon:Toggle("Auto Kill Boss Battle + Change Ghoul Race",_G.tocquyautr,function(value)
+Weapon:Toggle("Auto Kill Boss + Change Ghoul Race",_G.tocquyautr,function(value)
 
 
 
@@ -65520,6 +65598,121 @@ spawn(function()
 
 
 	end)
+
+
+Weapon:Button("Tp Red Flower",function()
+
+
+
+
+
+
+
+			for i,v in pairs(game.Workspace:GetDescendants()) do
+
+
+
+
+
+
+
+				if v.Name == "Flower2" then
+
+
+
+
+
+
+
+				    topos(v.CFrame)
+
+
+
+
+
+
+
+				end
+
+
+
+
+
+
+
+			end
+
+
+
+
+
+
+
+		end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		Weapon:Button("Tp Blue Flower",function()
+
+
+
+
+
+
+
+			for i,v in pairs(game.Workspace:GetDescendants()) do
+
+
+
+
+
+
+
+				if v.Name == "Flower1" then
+
+
+
+
+
+
+
+					topos(v.CFrame)
+
+
+
+
+
+
+
+				end
+
+
+
+
+
+
+
+			end
+
+
+
+
+
+
+
+		end)
 
 
 
@@ -96758,7 +96951,7 @@ game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 
 
 
-wait(12)
+wait(5)
 
 
 
@@ -98018,7 +98211,7 @@ end
 
 
 
-
+if World2 then
 
 Dungeon:Seperator("\\\\\  Law Dungeon  //")
 
@@ -98573,7 +98766,7 @@ end)
 
 
 end
-
+end
 
 
 
@@ -105269,7 +105462,6 @@ function UpdateIslandESP()
 
 
 
-if World2 then
 
 
 
@@ -105277,127 +105469,11 @@ if World2 then
 
 
 
-		DevilFruit:Button("Tp Red Flower",function()
 
+		
 
 
 
-
-
-
-			for i,v in pairs(game.Workspace:GetDescendants()) do
-
-
-
-
-
-
-
-				if v.Name == "Flower2" then
-
-
-
-
-
-
-
-				    topos(v.CFrame)
-
-
-
-
-
-
-
-				end
-
-
-
-
-
-
-
-			end
-
-
-
-
-
-
-
-		end)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		DevilFruit:Button("Tp Blue Flower",function()
-
-
-
-
-
-
-
-			for i,v in pairs(game.Workspace:GetDescendants()) do
-
-
-
-
-
-
-
-				if v.Name == "Flower1" then
-
-
-
-
-
-
-
-					topos(v.CFrame)
-
-
-
-
-
-
-
-				end
-
-
-
-
-
-
-
-			end
-
-
-
-
-
-
-
-		end)
-
-
-
-
-
-
-
-	end
 
 
 
@@ -112780,7 +112856,7 @@ end
 
 
 
-
+if World3 then
     DevilFruit:Toggle("ESP Real Fruit",RealFruitESP,function(a)
 
 
@@ -112806,6 +112882,7 @@ end
 
 
     end)
+    end
 
 
 
@@ -112820,7 +112897,7 @@ end
 
 
 
-
+if World2 then
     DevilFruit:Toggle("ESP Flower",false,function(a)
 
 
@@ -112846,6 +112923,7 @@ end
 
 
     end)
+    end
 
 
 
@@ -113083,7 +113161,7 @@ end)
 
 
 
-
+if World2 or World3 then
 
 DevilFruit:Toggle("Esp Sea Beast", false, function(nec)
 
@@ -113102,6 +113180,7 @@ DevilFruit:Toggle("Esp Sea Beast", false, function(nec)
 
 
 end)
+end
 
 
 
@@ -113156,7 +113235,7 @@ end)
 
 
 
-
+if World3 then
 DevilFruit:Toggle("Esp Mirage Island", false, function(value)
 
 
@@ -113198,6 +113277,7 @@ DevilFruit:Toggle("Esp Mirage Island", false, function(value)
 
 
     end)
+end
 
 
 
@@ -113211,8 +113291,7 @@ DevilFruit:Toggle("Esp Mirage Island", false, function(value)
 
 
 
-
-
+if World3 then
 DevilFruit:Toggle("Esp Advanced Fruit Dealer", false, function(value)
 
 
@@ -113254,6 +113333,7 @@ DevilFruit:Toggle("Esp Advanced Fruit Dealer", false, function(value)
 
 
     end)
+    end
 
 
 
@@ -113268,7 +113348,7 @@ DevilFruit:Toggle("Esp Advanced Fruit Dealer", false, function(value)
 
 
 
-
+if World3 then
 DevilFruit:Toggle("Esp Gear", false, function(value)
 
 
@@ -113310,7 +113390,7 @@ DevilFruit:Toggle("Esp Gear", false, function(value)
 
 
     end)
-
+end
 
 
 
