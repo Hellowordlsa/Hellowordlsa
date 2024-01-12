@@ -1739,7 +1739,8 @@ coroutine.wrap(YTZCAJC_fake_script)()
 
 
 
- repeat wait() until game.Players
+ if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
+ local args = {
 
 
 
@@ -1747,7 +1748,7 @@ coroutine.wrap(YTZCAJC_fake_script)()
 
 
 
-    repeat wait() until game.Players.LocalPlayer
+			[1] = "SetTeam",
 
 
 
@@ -1755,7 +1756,7 @@ coroutine.wrap(YTZCAJC_fake_script)()
 
 
 
-    repeat wait() until game.ReplicatedStorage
+			[2] = "Marines"
 
 
 
@@ -1763,7 +1764,7 @@ coroutine.wrap(YTZCAJC_fake_script)()
 
 
 
-    repeat wait() until game.ReplicatedStorage:FindFirstChild("Remotes");
+		}
 
 
 
@@ -1771,223 +1772,8 @@ coroutine.wrap(YTZCAJC_fake_script)()
 
 
 
-    repeat wait() until game.Players.LocalPlayer:FindFirstChild("PlayerGui");
-
-
-
-
-
-
-
-    repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main");
-
-
-
-
-
-
-
-    repeat wait() until game:GetService("Players")
-
-
-
-
-
-
-
-    repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Energy")
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-    wait(1)
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-    if not game:IsLoaded() then repeat game.Loaded:Wait() until game:IsLoaded() end
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-    if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
-
-
-
-
-
-
-
-        repeat wait()
-
-
-
-
-
-
-
-            if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
-
-
-
-
-
-
-
-                if _G.Team == "Pirate" then
-
-
-
-
-
-
-
-                    for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Activated)) do                                                                                                
-
-
-
-
-
-
-
-                        v.Function()
-
-
-
-
-
-
-
-                    end
-
-
-
-
-
-
-
-                elseif _G.Team == "Marine" then
-
-
-
-
-
-
-
-                    for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.Activated)) do                                                                                                
-
-
-
-
-
-
-
-                        v.Function()
-
-
-
-
-
-
-
-                    end
-
-
-
-
-
-
-
-                else
-
-
-
-
-
-
-
-                    for i, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Activated)) do                                                                                                
-
-
-
-
-
-
-
-                        v.Function()
-
-
-
-
-
-
-
-                    end
-
-
-
-
-
-
-
-                end
-
-
-
-
-
-
-
-            end
-
-
-
-
-
-
-
-        until game.Players.LocalPlayer.Team ~= Marines and game:IsLoaded()
-
-
-
-
-
-
-
-    end
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+end
 
 
 
@@ -32720,7 +32506,7 @@ spawn(function()
 
 
 
-		  	if _G.Auto_Farm_Level or _G.Auto_New_World or _G.AutoFarmFruitMastery or _G.thuocsung or _G.sungtegiac or _G.shinapo or _G.chatpong or _G.rangnanh or  _G.magma or _G.Auto_Third_World or _G.duoica or _G.tocquy or _G.TeleportIsland or _G.SeaBeasts1 or _G.vayrong or _G.Auto_Farm_Boss or _G.Autotushita or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Farm_All_Boss or _G.Auto_Saber or _G.Auto_Pole  or _G.Auto_Farm_Angel_Wing or _G.Auto_Factory_Farm or _G.Auto_Farm_Ectoplasm or _G.mudautr or _G.Auto_Rengoku or _G.Auto_Farm_Radioactive or _G.Auto_Evo_Race_V2 or _G.Auto_Swan_Glasses or _G.Auto_Dragon_Trident or _G.Auto_Soul_Reaper  or _G.Auto_Farm_Bone or _G.canho or _G.Cacao  or _G.nuocmat or _G.Auto_Open_Dough_Dungeon or _G.Auto_Rainbow_Haki or _G.Auto_Musketeer_Hat or _G.Auto_Holy_Torch or _G.Auto_Canvander or _G.d or _G.Auto_Twin_Hook or _G.Auto_Serpent_Bow or _G.AutoFarmMaterial or _G.Auto_Fully_Death_Step or _G.Auto_Fully_SharkMan_Karate or _G.Teleport_to_Player or _G.Auto_Kill_Player_Melee or _G.Auto_Kill_Player_Gun or _G.Start_Tween_Island or _G.Auto_Next_Island or _G.autoraid or AutoNextIsland or _G.Auto_Farm_Sword or _G.MeleeFarm or _G.AutoFarmSelectMonster or _G.AutoFarmKenHakivor or _G.AutoObservationHakiV2  or _G.AutoFactory or _G.Auto_Kill_Law or _G.Caca or _G.bjirFishCrewBoat or _G.AutoSeaBest or _G.bjirFishBoat or _G.KillGhostShip or _G.Grab_Chest then
+		  	if _G.Auto_Farm_Level or _G.Auto_New_World or _G.AutoFarmFruitMastery or _G.thuocsung or _G.sungtegiac or _G.shinapo or _G.chatpong or _G.rangnanh or  _G.magma or _G.Auto_Third_World or _G.duoica or _G.tocquy or _G.TeleportIsland or _G.SeaBeasts1 or _G.vayrong or _G.Auto_Farm_Boss or _G.Autotushita or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Farm_All_Boss or _G.Auto_Saber or _G.Auto_Pole  or _G.Auto_Farm_Angel_Wing or _G.Auto_Factory_Farm or _G.Auto_Farm_Ectoplasm or _G.mudautr or _G.Auto_Rengoku or _G.Auto_Farm_Radioactive or _G.Auto_Evo_Race_V2 or _G.Auto_Swan_Glasses or _G.Auto_Dragon_Trident or _G.Auto_Soul_Reaper  or _G.Auto_Farm_Bone or _G.canho or _G.Cacao  or _G.nuocmat or _G.Auto_Open_Dough_Dungeon or _G.Auto_Rainbow_Haki or _G.Auto_Musketeer_Hat or _G.Auto_Holy_Torch or _G.Auto_Canvander or _G.d or _G.Auto_Twin_Hook or _G.Auto_Serpent_Bow or _G.AutoFarmMaterial or _G.Auto_Fully_Death_Step or _G.Auto_Fully_SharkMan_Karate or _G.Teleport_to_Player or _G.Auto_Kill_Player_Melee or _G.Auto_Kill_Player_Gun or _G.Start_Tween_Island or _G.Auto_Next_Island or _G.autoraid or AutoNextIsland or _G.Auto_Farm_Sword or _G.MeleeFarm or _G.AutoFarmSelectMonster or _G.AutoFarmKenHakivor or _G.AutoObservationHakiV2  or _G.AutoFactory or _G.Auto_Kill_Law or _G.Caca or _G.bjirFishCrewBoat or _G.AutoSeaBest or _G.bjirFishBoat or _G.KillGhostShip or _G.Grab_Chest or _G.Auto_Quest_Tushita_2 then
 
 
 
@@ -32880,7 +32666,7 @@ spawn(function()
 
 
 
-			if _G.Auto_Farm_Level or _G.Auto_New_World or _G.TeleportIsland or _G.Auto_Third_World or _G.shinapo or _G.rangnanh or _G.chatpong or _G.thuocsung or _G.sungtegiac or _G.Auto_Farm_Chest or _G.duoica or  _G.Auto_Farm_Boss or _G.SeaBeasts1 or _G.vayrong  or _G.tocquy or _G.Auto_Elite_Hunter or _G.AutoFarmKenHaki or _G.AutoFactory or _G.AutoFarmSelectMonster or _G.Auto_Cake_Prince or _G.Auto_Farm_All_Boss or _G.Auto_Saber or _G.Auto_Pole  or _G.Auto_Factory_Farm or _G.Auto_Farm_Ectoplasm or _G.mudautr or _G.d or _G.Auto_Rengoku or _G.Autotushita or _G.Auto_Farm_Radioactive   or _G.Auto_Evo_Race_V2 or _G.Auto_Swan_Glasses or _G.Auto_Dragon_Trident or _G.Auto_Soul_Reaper or _G.Auto_Farm_Fish_Tail or _G.Cacao or _G.canho or _G.magma or _G.Auto_Farm_Mini_Tusk or _G.nuocmat or  _G.Auto_Farm_Bone or _G.Auto_Open_Dough_Dungeon or _G.Auto_Rainbow_Haki or _G.Auto_Musketeer_Hat or _G.Auto_Holy_Torch or _G.Auto_Canvander or _G.AutoFarmMaterial or _G.autoraid or _G.Auto_Twin_Hook or AutoNextIsland or _G.Auto_Serpent_Bow or _G.Auto_Fully_Death_Step or _G.Auto_Fully_SharkMan_Karate or _G.Teleport_to_Player or _G.Auto_Kill_Player_Melee or _G.Auto_Kill_Player_Gun or _G.Start_Tween_Island or _G.AutoObservationHakiV2 or _G.d or _G.Auto_Next_Island or _G.Auto_Farm_Sword or _G.MeleeFarm or _G.Auto_Kill_Law or _G.Caca or _G.bjirFishCrewBoat or _G.AutoSeaBest or _G.bjirFishBoat or _G.KillGhostShip or _G.Grab_Chest then
+			if _G.Auto_Farm_Level or _G.Auto_New_World or _G.TeleportIsland or _G.Auto_Third_World or _G.shinapo or _G.rangnanh or _G.chatpong or _G.thuocsung or _G.sungtegiac or _G.Auto_Farm_Chest or _G.duoica or  _G.Auto_Farm_Boss or _G.SeaBeasts1 or _G.vayrong  or _G.tocquy or _G.Auto_Elite_Hunter or _G.AutoFarmKenHaki or _G.AutoFactory or _G.AutoFarmSelectMonster or _G.Auto_Cake_Prince or _G.Auto_Farm_All_Boss or _G.Auto_Saber or _G.Auto_Pole  or _G.Auto_Factory_Farm or _G.Auto_Farm_Ectoplasm or _G.mudautr or _G.d or _G.Auto_Rengoku or _G.Autotushita or _G.Auto_Farm_Radioactive   or _G.Auto_Evo_Race_V2 or _G.Auto_Swan_Glasses or _G.Auto_Dragon_Trident or _G.Auto_Soul_Reaper or _G.Auto_Farm_Fish_Tail or _G.Cacao or _G.canho or _G.magma or _G.Auto_Farm_Mini_Tusk or _G.nuocmat or  _G.Auto_Farm_Bone or _G.Auto_Open_Dough_Dungeon or _G.Auto_Rainbow_Haki or _G.Auto_Musketeer_Hat or _G.Auto_Holy_Torch or _G.Auto_Canvander or _G.AutoFarmMaterial or _G.autoraid or _G.Auto_Twin_Hook or AutoNextIsland or _G.Auto_Serpent_Bow or _G.Auto_Fully_Death_Step or _G.Auto_Fully_SharkMan_Karate or _G.Teleport_to_Player or _G.Auto_Kill_Player_Melee or _G.Auto_Kill_Player_Gun or _G.Start_Tween_Island or _G.AutoObservationHakiV2 or _G.d or _G.Auto_Next_Island or _G.Auto_Farm_Sword or _G.MeleeFarm or _G.Auto_Kill_Law or _G.Caca or _G.bjirFishCrewBoat or _G.AutoSeaBest or _G.bjirFishBoat or _G.KillGhostShip or _G.Grab_Chest or _G.Auto_Quest_Tushita_2 then
 
 
 
@@ -39932,7 +39718,7 @@ coroutine.wrap(function()
 		local ac = CombatFrameworkR.activeController
 		if ac and ac.equipped then
 			if _G.FastAttack and _G.FastMode == "Normal" then
-				AttackFunction()
+				AttackHit()
 				if _G.FastModeD == "Normal" then
 					if tick() - cooldownfastattack > 1 then wait(1) cooldownfastattack = tick() end
 				elseif _G.FastModeD == "Fast" then
@@ -39953,6 +39739,65 @@ coroutine.wrap(function()
 		end
 	end
 end)
+
+local L_88_ = game.Players.LocalPlayer
+	local L_89_ = getupvalues(require(L_88_.PlayerScripts.CombatFramework))
+	local L_90_ = L_89_[2]
+	function GetCurrentBlade()
+		local L_282_ = L_90_.activeController
+		local L_283_ = L_282_.blades[1]
+		if not L_283_ then
+			return
+		end
+		while L_283_.Parent ~= game.Players.LocalPlayer.Character do
+			L_283_ = L_283_.Parent
+		end
+		return L_283_
+	end
+	function AttackNoCD()
+				local L_284_ = L_90_.activeController
+				for L_285_forvar0 = 1, 1 do
+					local L_286_ = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
+                        L_88_.Character, {
+						L_88_.Character.HumanoidRootPart
+					}, 60)
+					local L_287_ = {}
+					local L_288_ = {}
+					for L_289_forvar0, L_290_forvar1 in pairs(L_286_) do
+						if L_290_forvar1.Parent:FindFirstChild("HumanoidRootPart") and not L_288_[L_290_forvar1.Parent] then
+							table.insert(L_287_, L_290_forvar1.Parent.HumanoidRootPart)
+							L_288_[L_290_forvar1.Parent] = true
+						end
+					end
+					L_286_ = L_287_
+					if # L_286_ > 0 then
+						local L_291_ = debug.getupvalue(L_284_.attack, 5)
+						local L_292_ = debug.getupvalue(L_284_.attack, 6)
+						local L_293_ = debug.getupvalue(L_284_.attack, 4)
+						local L_294_ = debug.getupvalue(L_284_.attack, 7)
+						local L_295_ = (L_291_ * 798405 + L_293_ * 727595) % L_292_
+						local L_296_ = L_293_ * 798405
+						(function()
+							L_295_ = (L_295_ * L_292_ + L_296_) % 1099511627776
+							L_291_ = math.floor(L_295_ / L_292_)
+							L_293_ = L_295_ - L_291_ * L_292_
+						end)()
+						L_294_ = L_294_ + 1
+						debug.setupvalue(L_284_.attack, 5, L_291_)
+						debug.setupvalue(L_284_.attack, 6, L_292_)
+						debug.setupvalue(L_284_.attack, 4, L_293_)
+						debug.setupvalue(L_284_.attack, 7, L_294_)
+						pcall(function()
+							if L_88_.Character:FindFirstChildOfClass("Tool") and L_284_.blades and L_284_.blades[1] then
+								L_284_.animator.anims.basic[1]:Play(0.01, 0.01, 0.01)
+								game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(GetCurrentBlade()))
+								game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(L_295_ / 1099511627776 * 16777215), L_294_)
+								game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", L_286_, L_285_forvar0, "")
+							end
+						end)
+					end
+				end
+			end
 
 local AttackList = {"0", "0.1", "0.15", "0.155", "0.16", "0.165", "0.17", "0.175", "0.18", "0.185"}
 _G.FastAttackDelay = "0.175"
@@ -41106,6 +40951,115 @@ end)
 
 
 
+function AntiBan()
+		for L_116_forvar0, L_117_forvar1 in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+			if L_117_forvar1:IsA("LocalScript") then
+				if L_117_forvar1.Name == "General" or L_117_forvar1.Name == "Shiftlock" or L_117_forvar1.Name == "FallDamage" or L_117_forvar1.Name == "4444" or L_117_forvar1.Name == "CamBob" or L_117_forvar1.Name == "JumpCD" or L_117_forvar1.Name == "Looking" or L_117_forvar1.Name == "Run" then
+					L_117_forvar1:Destroy()
+				end
+			end
+		end
+		for L_118_forvar0, L_119_forvar1 in pairs(game:GetService("Players").LocalPlayer.PlayerScripts:GetDescendants()) do
+			if L_119_forvar1:IsA("LocalScript") then
+				if L_119_forvar1.Name == "RobloxMotor6DBugFix" or L_119_forvar1.Name == "Clans" or L_119_forvar1.Name == "Codes" or L_119_forvar1.Name == "CustomForceField" or L_119_forvar1.Name == "MenuBloodSp" or L_119_forvar1.Name == "PlayerList" then
+					L_119_forvar1:Destroy()
+				end
+			end
+		end
+	end
+	AntiBan()
+
+
+
+
+
+Setting:Toggle("Anti Flag Player",true,function(value)
+
+
+
+
+
+
+
+ _G.Aa = value
+
+
+
+
+
+
+
+end)
+
+
+
+spawn(function()
+
+
+
+
+
+
+
+ pcall(function()
+
+
+
+
+
+
+
+  while wait() do
+
+
+
+
+
+
+
+  if _G.Aa then
+
+
+
+
+
+
+
+AntiBan()
+
+
+
+
+
+
+
+  end
+
+
+
+
+
+
+
+  end
+
+
+
+
+
+
+
+  end)
+
+
+
+
+
+
+
+ end)
+
+ 
 function CheckAntiCheatBypass()
 
     for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
@@ -41176,7 +41130,7 @@ Setting:Toggle("Anti Ban",true,function(value)
 
 
 
- _G.Aa = value
+ _G.Aaa = value
 
 
 
@@ -41212,7 +41166,7 @@ spawn(function()
 
 
 
-  if _G.Aa then
+  if _G.Aaa then
 
 
 
@@ -41253,8 +41207,6 @@ CheckAntiCheatBypass()
 
 
  end)
-
- 
 
  
 
@@ -41379,7 +41331,46 @@ spawn(function()
 
 
 
+Setting:Toggle("Auto Rejoin",true,function(value)
 
+
+
+
+
+
+
+ _G.AutoRejoin = value
+
+
+
+
+
+
+
+end)
+
+
+spawn(function()
+
+    while wait() do
+
+        if _G.AutoRejoin then
+
+                getgenv().rejoin = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
+
+                    if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
+
+                        game:GetService("TeleportService"):Teleport(game.PlaceId)
+
+                    end
+
+                end)
+
+            end
+
+        end
+
+    end)
 
 
 
@@ -43140,95 +43131,73 @@ end)
 
 
 
-    Setting:Toggle("Remove Attack",false,function(value)
-
-
-
-    getgenv().A = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).wrapAttackAnimationAsync 
-
-
-
-getgenv().B = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle).play
-
-
-
-spawn(function()
-
-
-
-
-
-
-
-    while wait() do
-
-
-
-            pcall(function()
-
-
-
-                require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).wrapAttackAnimationAsync =function(a1,a2,a3,a4,a5)
-
-
-
-                    local GetBladeHits = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).getBladeHits(a2,a3,a4)
-
-
-
-                    if GetBladeHits then
-
-
-
-                         require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).play = function() end
-
-
-
-                        a1:Play(0.2, 0.2, 0.2)
-
-
-
-                        a5(GetBladeHits)
-
-
-
-                         require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).play = getgenv().B 
-
-
-
-                        wait(.5)
-
-
-
-                        a1:Stop()
-
-
-
-                    end
-
-
-
-                end
-
-
-
-            end)
-
-
-
-        
-
-
-
+    Setting:Toggle("Delete Attack",nil,function(d)
+    _G.DeleteAttackFx = d
+    if _G.DeleteAttackFx == true then
+    while _G.DeleteAttackFx do wait()
+        for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
+            if v.Name == "CurvedRing" or v.Name == "DamageCounter" or v.Name == "SwordSlash" or v.Name == "Damage" or v.Name == "Mon" or v.Name == "Sounds" then
+                v:Destroy() 
+            end
+        end
     end
-
-
-
+    end
 end)
 
+_G.DeleteAttackFx = true
+    if _G.DeleteAttackFx == true then
+        for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
+            if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "SwordSlash" or v.Name == "Sounds" then
+                v:Destroy() 
+            end
+        end
+    end
 
+Setting:Toggle("Remove Attack Animation",false,function(value)
+    getgenv().A = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).wrapAttackAnimationAsync 
+getgenv().B = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle).play
+spawn(function()
 
-   end)
+    while wait() do
+            pcall(function()
+                require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).wrapAttackAnimationAsync =function(a1,a2,a3,a4,a5)
+                    local GetBladeHits = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).getBladeHits(a2,a3,a4)
+                    if GetBladeHits then
+                         require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).play = function() end
+                        a1:Play(0.2, 0.2, 0.2)
+                        a5(GetBladeHits)
+                         require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).play = getgenv().B 
+                        wait(.5)
+                        a1:Stop()
+                    end
+                end
+            end)
+        
+    end
+end)
+end)
+
+getgenv().A = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).wrapAttackAnimationAsync
+getgenv().B = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.Particle).play
+spawn(function()
+    while wait() do
+      if _G.DeleteAttackFx then
+            pcall(function()
+                require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).wrapAttackAnimationAsync =function(a1,a2,a3,a4,a5)
+                    local GetBladeHits = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).getBladeHits(a2,a3,a4)
+                    if GetBladeHits then
+                         require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).play = function() end
+                        a1:Play(0.2, 0.2, 0.2)
+                        a5(GetBladeHits)
+                         require(game:GetService("ReplicatedStorage").CombatFramework.RigLib).play = getgenv().B 
+                        wait(.5)
+                        a1:Stop()
+                    end
+                end
+            end)
+         end
+    end
+end)
 
 
 
@@ -43524,7 +43493,7 @@ if World3 then
 
 
 
-ca:Seperator("Kitsune Island")
+ca:Seperator("🦊 Kitsune Island ")
 
 
 
@@ -43998,7 +43967,84 @@ telePlr()
 
     end)
 
+function UpdateKitsune()
+			for L_399_forvar0, L_400_forvar1 in pairs(game:GetService("Workspace").Map.KitsuneIsalnd.ShrineActive:GetChildren()) do
+				pcall(function()
+					if KitsuneESP then
+						if L_400_forvar1.Name ~= "NeonShrinePart" then
+							if not L_400_forvar1:FindFirstChild('IslandESP') then
+								local L_401_ = Instance.new('BillboardGui', L_400_forvar1)
+								L_401_.Name = 'IslandESP'
+								L_401_.ExtentsOffset = Vector3.new(0, 1, 0)
+								L_401_.Size = UDim2.new(1, 200, 1, 30)
+								L_401_.Adornee = L_400_forvar1
+								L_401_.AlwaysOnTop = true
+								local L_402_ = Instance.new('TextLabel', L_401_)
+								L_402_.Font = "Code"
+								L_402_.FontSize = "Size14"
+								L_402_.TextWrapped = true
+								L_402_.Size = UDim2.new(1, 0, 1, 0)
+								L_402_.TextYAlignment = 'Top'
+								L_402_.BackgroundTransparency = 1
+								L_402_.TextStrokeTransparency = 0.5
+								L_402_.TextColor3 = Color3.fromRGB(80, 245, 245)
+								L_402_.Text = "Kitsune Island"
+							else
+								L_400_forvar1['IslandESP'].TextLabel.Text = "Kitsune Island"
+							end
+						end
+					else
+						if L_400_forvar1:FindFirstChild('IslandESP') then
+							L_400_forvar1:FindFirstChild('IslandESP'):Destroy()
+						end
+					end
+				end)
+			end
+		end
 
+
+
+ca:Toggle("Esp Kitsune",KitsuneESP,function(value)
+
+
+
+
+
+
+
+        KitsuneESP = value
+
+
+
+
+
+
+
+        while KitsuneESP do wait()
+
+
+
+
+
+
+
+            UpdateKitsune()
+
+
+
+
+
+
+
+        end
+
+
+
+
+
+
+
+    end)
 
 ca:Toggle("Auto Trade Azure Ember",AutoTrade,function(J)
 
@@ -45581,7 +45627,7 @@ end)
 
 
 
-ca:Label("Buy Pirate Brigade First")
+ca:Label("Go to Tiki Outpost First")
 
     ca:Toggle("Auto Sail And Kill Enemies",_G.BiirTrax,function(state)
 
@@ -52154,7 +52200,7 @@ Main:Toggle("Auto Farm Fruit Mastery",_G.AutoFarmFruitMastery,function(value)
 
 
 
-
+_G.BringNormal = value
 
 
 
@@ -54214,6 +54260,8 @@ if not game:GetService("UserInputService").TouchEnabled and not game:GetService(
 
 
 
+
+
 _G.Kill_At = 25
 
 
@@ -54393,89 +54441,7 @@ Main:Toggle("Skill Z",true,function(a)
 	end)
 	
 	
-	Main:Toggle("Skill F",false,function(a)
-
-
-
-
-
-
-
-		_G.SkillF= a
-
-
-
-
-
-
-
-	end)
 	
-	
-	if _G.SkillF then
-
-
-
-
-
-
-
-   local args = {
-
-
-
-
-
-
-
-    [1] = PosMonMasteryFruit.Position
-
-
-
-
-
-
-
-   }
-
-
-
-
-
-
-
-   game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool").Name].RemoteEvent:FireServer(unpack(args))
-
-
-
-
-
-
-
-   game:GetService("VirtualInputManager"):SendKeyEvent(true,"F",false,game)
-
-
-
-
-
-
-
-   game:GetService("VirtualInputManager"):SendKeyEvent(false,"F",false,game)
-
-
-
-
-
-
-
-   end
-
-
-
-
-
-
-
 
 
 
@@ -69251,6 +69217,10 @@ end)
 
 
 
+
+
+
+
 		Weapon:Seperator(" Yama ")
 
 
@@ -69417,6 +69387,7 @@ spawn(function()
 						if _G.Auto_Quest_Tushita_2 and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 							if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 2000 then
 								repeat wait()
+								     EquipWeapon(_G.Select_Weapon)
 									_G.FastAttack = true
 									v.HumanoidRootPart.CanCollide = false
 									v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
@@ -78042,7 +78013,7 @@ if World3 then
 
 
 
-   Race:Seperator("Mirage Island")
+   Race:Seperator("🏝 Mirage Island ")
 
 
 
@@ -78621,9 +78592,9 @@ end)
 
 
 
-Race:Toggle("Auto Drive",AutoW,function(W)
+Race:Toggle("Auto Drive",AutoWW,function(W)
 
-    AutoW = W
+    AutoWW = W
 
     end)
 
@@ -78726,178 +78697,6 @@ Race:Toggle("Auto Teleport to Blue Gear",false,function(value)
 
 
          topos(game:GetService("Workspace").Map.MysticIsland:FindFirstChildOfClass("MeshPart").CFrame)
-
-
-
-end)
-
-
-
-
-
-
-
-Race:Toggle("Auto Chest Mirage",false,function(value)
-
-
-
-
-
-
-
-                
-
- local plr = game.Players.LocalPlayer
-
-local chr = plr.Character
-
-local t = game.TweenService
-
-
-
-local bv = Instance.new("BodyVelocity")
-
-bv.MaxForce = Vector3.new(1/0, 1/0, 1/0)
-
-bv.Velocity = Vector3.new()
-
-bv.Name = "bV"
-
-local bav = Instance.new("BodyAngularVelocity")
-
-bav.AngularVelocity = Vector3.new()
-
-bav.MaxTorque = Vector3.new(1/0, 1/0, 1/0)
-
-bav.Name = "bAV" 
-
-for _,v in next, workspace:GetDescendants() do
-
-    if v.Name:find("FragChest") then
-
-        pcall(function()
-
-            repeat 
-
-                local anc1 = bv:Clone()
-
-                anc1.Parent = chr.HumanoidRootPart
-
-                local anc2 = bav:Clone()
-
-                anc2.Parent = chr.HumanoidRootPart
-
-                local p = t:Create(chr.HumanoidRootPart, TweenInfo.new((plr:DistanceFromCharacter(v.Position)-111350)/1, Enum.EasingStyle.Linear), {CFrame=v.CFrame + Vector3.new(0, v.Size.Y, 0)})
-
-                p:Play()
-
-                p.Completed:wait()
-
-                chr.HumanoidRootPart.CFrame = v.CFrame
-
-                anc1:Destroy()
-
-                anc2:Destroy()
-
-                wait(.1)
-
-            until v.Parent ~= workspace
-
-        end)
-
-    end
-
-end
-
-local plr = game.Players.LocalPlayer
-
-local chr = plr.Character
-
-local t = game.TweenService
-
-
-
-local bv = Instance.new("BodyVelocity")
-
-bv.MaxForce = Vector3.new(1/0, 1/0, 1/0)
-
-bv.Velocity = Vector3.new()
-
-bv.Name = "bV"
-
-local bav = Instance.new("BodyAngularVelocity")
-
-bav.AngularVelocity = Vector3.new()
-
-bav.MaxTorque = Vector3.new(1/0, 1/0, 1/0)
-
-bav.Name = "bAV" 
-
-for _,v in next, workspace:GetDescendants() do
-
-    if v.Name:find("DiamondChest") then
-
-        pcall(function()
-
-            repeat 
-
-                local anc1 = bv:Clone()
-
-                anc1.Parent = chr.HumanoidRootPart
-
-                local anc2 = bav:Clone()
-
-                anc2.Parent = chr.HumanoidRootPart
-
-                local p = t:Create(chr.HumanoidRootPart, TweenInfo.new((plr:DistanceFromCharacter(v.Position)-111350)/1, Enum.EasingStyle.Linear), {CFrame=v.CFrame + Vector3.new(0, v.Size.Y, 0)})
-
-                p:Play()
-
-                p.Completed:wait()
-
-                chr.HumanoidRootPart.CFrame = v.CFrame
-
-                anc1:Destroy()
-
-                anc2:Destroy()
-
-                wait(.1)
-
-            until v.Parent ~= workspace
-
-        end)
-
-    end
-
-end
-
-
-
-spawn(function()
-
-    while task.wait() do
-
-       
-
-            game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
-
-                if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
-
-                    game:GetService("TeleportService"):Teleport(game.PlaceId)
-
-                end
-
-            end)         
-
-       
-
-    end
-
-end)
-
-
-
-
 
 
 
@@ -81325,7 +81124,173 @@ Race:Button("Teleport To Advanced Fruit Dealer",function()
     end
 end)
 
+Race:Button("Auto Chest Mirage",function()
+    game.StarterGui:SetCore("SendNotification", {
 
+
+
+        Title = "Chest Farm Mirage"; -- the title (ofc)
+
+
+
+        Text = "By Omg Hub"; -- what the text says (ofc)
+
+
+
+        Duration = 3; -- how long the notification should in secounds
+
+
+
+        }) 
+
+local plr = game.Players.LocalPlayer
+
+local chr = plr.Character
+
+local t = game.TweenService
+
+
+
+local bv = Instance.new("BodyVelocity")
+
+bv.MaxForce = Vector3.new(1/0, 1/0, 1/0)
+
+bv.Velocity = Vector3.new()
+
+bv.Name = "bV"
+
+local bav = Instance.new("BodyAngularVelocity")
+
+bav.AngularVelocity = Vector3.new()
+
+bav.MaxTorque = Vector3.new(1/0, 1/0, 1/0)
+
+bav.Name = "bAV" 
+
+for _,v in next, workspace:GetDescendants() do
+
+    if v.Name:find("FragChest") then
+
+        pcall(function()
+
+            repeat 
+
+                local anc1 = bv:Clone()
+
+                anc1.Parent = chr.HumanoidRootPart
+
+                local anc2 = bav:Clone()
+
+                anc2.Parent = chr.HumanoidRootPart
+
+                local p = t:Create(chr.HumanoidRootPart, TweenInfo.new((plr:DistanceFromCharacter(v.Position)-111350)/1, Enum.EasingStyle.Linear), {CFrame=v.CFrame + Vector3.new(0, v.Size.Y, 0)})
+
+                p:Play()
+
+                p.Completed:wait()
+
+                chr.HumanoidRootPart.CFrame = v.CFrame
+
+                anc1:Destroy()
+
+                anc2:Destroy()
+
+                wait(.1)
+
+            until v.Parent ~= workspace
+
+        end)
+
+    end
+
+end
+
+local plr = game.Players.LocalPlayer
+
+local chr = plr.Character
+
+local t = game.TweenService
+
+
+
+local bv = Instance.new("BodyVelocity")
+
+bv.MaxForce = Vector3.new(1/0, 1/0, 1/0)
+
+bv.Velocity = Vector3.new()
+
+bv.Name = "bV"
+
+local bav = Instance.new("BodyAngularVelocity")
+
+bav.AngularVelocity = Vector3.new()
+
+bav.MaxTorque = Vector3.new(1/0, 1/0, 1/0)
+
+bav.Name = "bAV" 
+
+for _,v in next, workspace:GetDescendants() do
+
+    if v.Name:find("DiamondChest") then
+
+        pcall(function()
+
+            repeat 
+
+                local anc1 = bv:Clone()
+
+                anc1.Parent = chr.HumanoidRootPart
+
+                local anc2 = bav:Clone()
+
+                anc2.Parent = chr.HumanoidRootPart
+
+                local p = t:Create(chr.HumanoidRootPart, TweenInfo.new((plr:DistanceFromCharacter(v.Position)-111350)/1, Enum.EasingStyle.Linear), {CFrame=v.CFrame + Vector3.new(0, v.Size.Y, 0)})
+
+                p:Play()
+
+                p.Completed:wait()
+
+                chr.HumanoidRootPart.CFrame = v.CFrame
+
+                anc1:Destroy()
+
+                anc2:Destroy()
+
+                wait(.1)
+
+            until v.Parent ~= workspace
+
+        end)
+
+    end
+
+end
+
+
+
+spawn(function()
+
+    while task.wait() do
+
+       
+
+            game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
+
+                if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
+
+                    game:GetService("TeleportService"):Teleport(game.PlaceId)
+
+                end
+
+            end)         
+
+       
+
+    end
+
+end)
+end)
 
 Race:Button("Tween To Mirage Island",function()
 
@@ -82507,7 +82472,7 @@ end)
 
 
 
-end
+
 
 
 
@@ -82932,6 +82897,7 @@ end)
 
 
   end)
+  end
 
 
 
@@ -97419,122 +97385,22 @@ spawn(function()
 
 
 
-
-
-
-
             for i,v in pairs(game.Workspace.Enemies:GetDescendants()) do
-
-
-
-
-
-
-
                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-
-
-
-
-
-
-
                     pcall(function()
-
-
-
-
-
-
-
-                        repeat wait()
-
-
-
-
-
-
-
+                        repeat wait(.1)
+                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                             v.Humanoid.Health = 0
-
-
-
-
-
-
-
                             v.HumanoidRootPart.CanCollide = false
-
-
-
-
-
-
-
-							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-
-
-
-
-
-
-
-                        until not _G.Kill_Aura  or not v.Parent or v.Humanoid.Health <= 0
-
-
-
-
-
-
-
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                            v.HumanoidRootPart.Transparency = 0.8
+                        until not _G.Kill_Aura or not v.Parent or v.Humanoid.Health <= 0
                     end)
-
-
-
-
-
-
-
                 end
-
-
-
-
-
-
-
             end
-
-
-
-
-
-
-
         end
-
-
-
-
-
-
-
     end
-
-
-
-
-
-
-
 end)
-
-
-
-
-
-
-
 
 
 
@@ -115613,7 +115479,7 @@ Misc:Seperator("Lock Function")
 
 
 
-			if LockLevel then
+			if _G.LockLevel then
 
 
 
@@ -115621,7 +115487,7 @@ Misc:Seperator("Lock Function")
 
 
 
-				if game.Players.localPlayer.Data.Level.Value >= LockLevelValue then
+				if game.Players.localPlayer.Data.Level.Value >= _G.LockLevel then
 
 
 
