@@ -46733,7 +46733,7 @@ end
 
 
 
-Setting:Toggle("Auto Click",false,function(value)
+Setting:Toggle("Auto Click",true,function(value)
 
 
 
