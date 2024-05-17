@@ -123,7 +123,6 @@ local function split(str, sep)
     end
     return result
 end
-
         local LoadedUiHub 
         UserSettings():GetService("UserGameSettings").MasterVolume = 0
         spawn(
@@ -131,13 +130,21 @@ end
                 getgenv().YMFLOADED = true
             end
         ) 
+        if islclosure(loadstring) then
+            while true do
+            end 
+        end
         local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
         repeat
             task.wait()
         until game:IsLoaded() and game.Players and game.Players.LocalPlayer
+        if islclosure(loadstring) then
+            while true do
+            end -- Crash cracking ppl
+        end
         --- Hub Values ---
         Hub = {}
-        Hub.Name = "Tsuo Hub"
+        Hub.Name = "OMG Hub"
         Hub.Game = "Blox Fruits"
         ---- Settings -----
         HttpService = game:GetService("HttpService")
@@ -289,7 +296,7 @@ end
         IsMobile = CheckMobile()
         Size11,Size22 = 600,460
         if IsMobile then 
-            Size11,Size22 = 500,290
+            Size11,Size22 = 530,340
             local ScreenGui1 = Instance.new("ScreenGui")
 
 local ImageButton1 = Instance.new("ImageButton")
@@ -340,7 +347,7 @@ end
         local Window =
             Fluent:CreateWindow(
             {
-                Title = "OMG Hub | Blox Fruit",
+                Title = "OMG Hub | Blox Fruit | Second Script",
                 SubTitle = "By Omg",
                 TabWidth = 160,
                 Size = UDim2.fromOffset(Size11, Size22),
@@ -1384,7 +1391,7 @@ end
                 elseif v.Name == "Chocolate" then
                     v.Name = "Chocolate Island"
                 elseif v.Name == "Bar" then
-                    v.Name = "CafÃ©"
+                    v.Name = "Café"
                 end
             end
         end 
@@ -2770,9 +2777,9 @@ end
         end
         function CheckEliteStatus()
             if not Sea3 or not CheckElite() then
-                return "âŒ"
+                return "❌"
             end
-            return "âœ…"
+            return "✅"
         end
         function CheckRace()
             local v113 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "1")
@@ -2839,9 +2846,9 @@ end
         end
         function CheckGatCan()
             if game.ReplicatedStorage.Remotes.CommF_:InvokeServer("CheckTempleDoor") then
-                return "âœ…"
+                return "✅"
             end
-            return "âŒ"
+            return "❌"
         end 
         function PlayersCount()
             return #game.Players:GetChildren()
@@ -2868,9 +2875,9 @@ end
         end
         function CheckMirageIslandStatus()
             if not Sea3 or not game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
-                return "âŒ"
+                return "❌"
             end
-            return "âœ… "..tostring(math.floor(GetDistance(getHighestPoint()))/10).."m away"
+            return "✅ "..tostring(math.floor(GetDistance(getHighestPoint()))/10).."m away"
         end
         function function7()
             GameTime = "Error"
@@ -8184,7 +8191,7 @@ end
         
         -------- Creating functions element ------------
         do
-            DefaultTab:AddSection("Default")
+            DefaultTab:AddSection("toi nho tho")
             DefaultTab:NewButton({
                 Title = "Fly Boat",
                 Callback = function()
@@ -8905,8 +8912,8 @@ end
                     },
                     Multi = true,
                 }) 
-                SettingTab:NewToggle("Auto Use Skill",{
-                    Title = "Auto Use Skill",
+                SettingTab:NewToggle("Auto Spam Skill",{
+                    Title = "Auto Spam skill ngu",
                 })
                 task.spawn(function()
                     while task.wait() do 
@@ -9028,10 +9035,10 @@ end
         end
         ------ Attack Functions ---------
         
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/memaybeohub/Function-Scripts/main/FastAttackLoader.lua"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/memaybeohub/Function-Scripts/main/FastAttackLoade.lua"))()
         -- Final Load --
         LoadedUiHub = true
-        Window:SelectTab(21)
+        Window:SelectTab(1)
         Fluent:Notify(
             {
                 Title = "OMG Hub",
