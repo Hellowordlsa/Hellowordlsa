@@ -6502,6 +6502,20 @@ end
         end)
         task.spawn(function()
             while task.wait() do 
+                if Config["Auto Chest"] then 
+                    TweentoNearestChest()
+                end
+            end
+        end)
+        task.spawn(function()
+            while task.wait() do 
+                if Config["Auto Darkbeard"] then 
+                    AutoDarkBeard()
+                end
+            end
+        end)
+        task.spawn(function()
+            while task.wait() do 
                 if Config["Auto Store Fruit"] then 
                     pcall(
                     function()
@@ -8458,6 +8472,10 @@ end
                     Description = "Double Quest | Recommend for Sea 2/3"
                 }
             )
+            FarmTab:NewToggle("Auto Chest",{
+                        Title = "Auto Collect Chest",
+                        Description = "get."
+                    })            
             if Sea1 then
                 FarmTab:NewToggle(
                     "Kill Player Quest",
@@ -8523,7 +8541,7 @@ end
                     Title = "Hop For Bosses"
                 }
             )
-            FarmTab:AddSection("Elite/Rip India/Yama/Tushita/Dough King Functions")
+            FarmTab:AddSection("Elite/Rip India/Yama/Tushita/Dough King etc")
             FarmTab:NewToggle("Auto Elite",{
                 Title = "Auto Elite Hunter",
                 Description = "Auto Elite Hunter When It Spawned."
@@ -8552,6 +8570,10 @@ end
                 Title = "Auto Dough King",
                 Description = "Automatic do all what need to summon and kill Dough King.\nAlso this can be enabled with auto elite and elite hop."
             }) 
+           FarmTab:NewToggle("Auto Darkbeard",{
+                        Title = "Auto Kill-Summon Darkbeard",
+                        Description = "Bah"
+                    })            
             FarmTab:NewToggle("Auto Dough King Hop",{
                 Title = "Auto Dough King Hop",
                 Description = "Auto Dough King Hop."
@@ -8700,7 +8722,6 @@ end
                     Title = "Buy Boat And Wait",
                     Description = "This option enable with auto sea beast will buy a boat then wait sea beast or pirate boat spawns."
                 })
-                if Sea3 then 
                     SeaBeastTab:AddSection("Rough Sea")
                     SeaBeastTab:NewToggle("Auto Sail",{
                         Title = "Auto Sail",
@@ -8715,7 +8736,6 @@ end
                         Description = "Auto Kill Shark & Mobs",
                     }) 
                 end
-            end  
             if WeaponTab then 
                 WeaponTab:AddSection("Item Puzzle")
                 if Sea2 or Sea3 then
