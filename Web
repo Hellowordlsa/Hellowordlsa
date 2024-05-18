@@ -90,7 +90,7 @@ client.on('ready', async () => {
 
 client.on('messageCreate', async (message) => {
     const channel = message.channelId;
-    if (channel == "1197504846459310161" && noti_config.boss) {
+    if (channel == "1225433910331310200" && noti_config.boss) {
         // boss banana
         const data = message.embeds[0].fields;
         const webhook = new WebhookClient({ url: webhook_config.boss })
@@ -109,7 +109,7 @@ client.on('messageCreate', async (message) => {
                
                 
         })
-    } else if (channel == "1127324950320124000" && noti_config.boss) {
+    } else if (channel == "1225433910331310200" && noti_config.boss) {
         // boss sonic
         let sea = ''
         const data = message.embeds[0].fields;
@@ -136,7 +136,7 @@ client.on('messageCreate', async (message) => {
               
                 
         })
-    } else if (channel == "1144623714663682138" && noti_config.sword) {
+    } else if (channel == "1225433910331310200" && noti_config.sword) {
         // sword
         const data = message.embeds[0].fields;
         const webhook = new WebhookClient({ url: webhook_config.sword })
@@ -155,7 +155,7 @@ client.on('messageCreate', async (message) => {
            
                 
         })
-    } else if (channel == "1144623714663682138" && noti_config.sword) {
+    } else if (channel == "1225433910331310200" && noti_config.sword) {
         // sword
         const data = message.embeds[0].fields;
         const webhook = new WebhookClient({ url: webhook_config.sword })
@@ -174,7 +174,7 @@ client.on('messageCreate', async (message) => {
      
    
         })
-    } else if (channel == "1192840172883161158" && noti_config.mirage) {
+    } else if (channel == "1225433910331310200" && noti_config.mirage) {
         // mirage skyland
         const data = message.embeds[0].fields;
         const webhook = new WebhookClient({ url: webhook_config.mirage })
@@ -194,7 +194,7 @@ client.on('messageCreate', async (message) => {
               
 
         })
-    } else if (channel == "1085629109893349498" && noti_config.mirage) {
+    } else if (channel == "1225433910331310200" && noti_config.mirage) {
         // mirage
         const data = message.embeds[0].fields;
         const webhook = new WebhookClient({ url: webhook_config.mirage })
@@ -212,7 +212,7 @@ client.on('messageCreate', async (message) => {
            
            
         })
-    } else if (channel == "1088023824555053097" && noti_config.haki.legend) {
+    } else if (channel == "1225433910331310200" && noti_config.haki.legend) {
         // haki
         const data = message.embeds[0].fields;
         const webhook = new WebhookClient({ url: webhook_config.haki.legend })
@@ -232,7 +232,7 @@ client.on('messageCreate', async (message) => {
                
 
             })
-            } else if (channel == "1127514568982265897" && noti_config.haki.legend) {
+            } else if (channel == "1225433910331310200" && noti_config.haki.legend) {
         // haki
         const data = message.embeds[0].fields;
         const webhook = new WebhookClient({ url: webhook_config.haki.legend })
@@ -250,7 +250,7 @@ client.on('messageCreate', async (message) => {
               
 
         })
-    } else if (channel == "1127514620345716796" && noti_config.haki.normal) {
+    } else if (channel == "1225433910331310200" && noti_config.haki.normal) {
         // haki
         const data = message.embeds[0].fields;
         const webhook = new WebhookClient({ url: webhook_config.haki.normal })
@@ -269,7 +269,7 @@ client.on('messageCreate', async (message) => {
                
        
         })
-    } else if (channel == "1085601598555832400" && noti_config.fullmoon) {
+    } else if (channel == "1225433910331310200" && noti_config.fullmoon) {
         // full moon
         const data = message.embeds[0].fields;
         const webhook = new WebhookClient({ url: webhook_config.fullmoon })
@@ -289,7 +289,7 @@ client.on('messageCreate', async (message) => {
              
 
         })
-    } else if (channel == "1085571159849979944" && noti_config.fullmoon) {
+    } else if (channel == "1225433910331310200" && noti_config.fullmoon) {
         // full moon
         const data = message.embeds[0].fields;
         const webhook = new WebhookClient({ url: webhook_config.fullmoon })
@@ -342,7 +342,7 @@ client.on('messageCreate', async (message) => {
 
             })
         }
-    } else if (channel == "1132814626359365642" && noti_config.fruit_drop) {
+    } else if (channel == "1225433910331310200" && noti_config.fruit_drop) {
         // fruit
         const data = message.embeds[0].fields;
         const reslut = data[0].value.split(',');
