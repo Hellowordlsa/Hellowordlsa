@@ -1513,7 +1513,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                         end
                     end
                     local a = v:Clone()
-                    local side = math.clamp(3.25,0,10)
+                    local side = math.clamp(3.75,0,10)
                     local Sizeto = v.Size + Vector3.new(side,100,side)
                     a.Size = Vector3.new(0,0,v.Size.Z)
                     if v.ClassName == "MeshPart" then
@@ -1649,8 +1649,10 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                     if auto_farm() == true then
                         if not G["Dodgeing"] then
                             setCollide(false)
+                            LocalPlr.Character.Humanoid.PlatformStand = true
                         elseif G["Dodgeing"] then
                             setCollide(true)
+                            LocalPlr.Character.Humanoid.PlatformStand = false
                         end
                         local BeenASecond, V3 = false, Vector3.new(0, 0, 0)
                         for _, v in ipairs(LocalPlr.Character:GetDescendants()) do
@@ -1658,7 +1660,6 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                                 v.Velocity, v.RotVelocity = V3, V3
                             end
                         end
-                        LocalPlr.Character.Humanoid.PlatformStand = true
                         bv.Parent = LocalPlr.Character.HumanoidRootPart
                         bv.MaxForce = Vector3.new(100000,100000,100000)
                         bv.Velocity = Vector3.new(0,0,0)
