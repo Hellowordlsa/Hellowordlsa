@@ -62,6 +62,7 @@ local G = getgenv()
 G["response"] = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or (request)
 local Playing_Mode = 0
 local CardStepNumber = 0
+local IgnoreSpeed = 0.135
 local Tween_Info = nil
 local Rarity, CardUpgrade =
     {},
@@ -90,7 +91,7 @@ local RemoteEvent , RemoteFunction =
 local LocalID, Game, Update, BlackList_Characters, Currency_Items, Room =
     Plr:GetUserIdFromNameAsync(LocalPlr.Name),
     "OMG Hub | Anime Dimensions | Second Script",
-    " 1.0.1",
+    " 2",
     {"Naruto","Sasuke"},
     {"Gold","TraitToken","RaidCurrency","BossRushCurrency","Gem"},
     {
@@ -204,9 +205,9 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
         end
         local function get_valueCard(name)
             if name == "Level" then
-                return tonumber(PlrGui.MainGui.CenterUIFrame.Inventory.Frame.InvOverlayOuterFrame.CardInventoryOverlay.UpgradeFrame.CardLevel.Text:split(". ")[2]:split(" / ")[1])
+                return PlrGui.MainGui.CenterUIFrame.Inventory.Frame.InvOverlayOuterFrame.CardInventoryOverlay.UpgradeFrame.CardLevel.Text:split(". ")[2]:split(" / ")[1]
             elseif name == "Gold" then
-                return tonumber(PlrGui.MainGui.CenterUIFrame.Inventory.Frame.InvOverlayOuterFrame.CardInventoryOverlay.UpgradeFrame.GoldCost.Text)
+                return PlrGui.MainGui.CenterUIFrame.Inventory.Frame.InvOverlayOuterFrame.CardInventoryOverlay.UpgradeFrame.GoldCost.Text
             end
         end
         local function stringofnum(values)
@@ -324,7 +325,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                     table.insert(aim,v.Name)
                 end
             end
-            if LocalPlr.Character.Humanoid.WalkSpeed == 0 then
+            if LocalPlr.Character.Humanoid.WalkSpeed == 0 or LocalPlr.Character.HumanoidRootPart.Anchored == true then
                 table.insert(aim,"Animation")
             end
             return #aim
@@ -381,11 +382,11 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
             return LocalPlr.RespawnLocation.Name:split("SpawnLocation")[2]
         end
         local function teleport_circle()
-            local dist, thing = 100, false
+            local dist, thing = 175, false
             for i,v in ipairs(game:GetService("Workspace").GameMap:FindFirstChildOfClass("Model"):GetChildren()) do
                 if string.find(v.Name,"Teleport") and not string.find(v.Name,"Destination") then
                     local mag = (LocalPlr.Character.HumanoidRootPart.Position - v.Position).magnitude
-                    if mag < dist and dist_enemy(enemy("AllMob").HumanoidRootPart) > 75 then
+                    if mag < dist and dist_enemy(enemy("AllMob").HumanoidRootPart) > 175 then
                         Playing_Mode = 0
                         dist = mag
                         thing = v
@@ -393,6 +394,43 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                 end
             end
             return thing
+        end
+        local function GOLD()
+            if string.find(get_value("Gold"),",") then
+                local b = string.gsub(get_value("Gold"),",","")
+                return b
+            else
+                return stringofnum(get_value("Gold"))
+            end
+        end
+        local function LayoutOrder3(name)
+            if name == "get" then
+                local w = {}
+                for i,v in ipairs(PlrGui.MainGui.CenterUIFrame.Inventory.Frame.CardInventoryFrame.CardInventoryScrollingFrame:GetChildren()) do
+                    if v:IsA("ImageButton") and v.LayoutOrder <= 3 and v.LayoutOrder ~= 0 then
+                        table.insert(w,v.Name)
+                    end
+                end
+                return #w
+            elseif name == "val" then
+                local a = {}
+                local b = {}
+                for i,v in ipairs(PlrGui.MainGui.CenterUIFrame.Inventory.Frame.CardInventoryFrame.CardInventoryScrollingFrame:GetChildren()) do
+                    if v:IsA("ImageButton") and v.LayoutOrder >= 1 and v.LayoutOrder ~= 0 then
+                        table.insert(a,{
+                            ["name"] = v.Name,
+                            ["lvl"] = v.LayoutOrder
+                        })
+                    end
+                end
+                table.sort(a,function (x,c)
+                    return x["lvl"] < c["lvl"]
+                end)
+                for i,v in pairs(a) do
+                    table.insert(b,v["name"])
+                end
+                return b
+            end
         end
         --// Loading Gui
         local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
@@ -441,7 +479,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
             end
             if CoreGui:FindFirstChild("CrazyDay") then
                 G["Loading (Gui)"] = true
-                Fluent:Notify({Title = "Successfully! OMG Hub Loaded", Content = "Time: "..tostring(Workspace.DistributedGameTime), SubContent = nil, Duration = 10})
+                Fluent:Notify({Title = "Successfully loaded", Content = "Time: "..tostring(Workspace.DistributedGameTime), SubContent = nil, Duration = 10})
                 break
             end
         end
@@ -531,7 +569,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                             Title = "Yes",
                             Callback = function()
                                 writefile(CrazyDayF.."settings/Configs.json",[[
-                                    {"objects":[{"idx":"Current Dimension","type":"Dropdown","mutli":false,"value":"Titan Dimension"},{"idx":"Max Upgrade","type":"Slider","value":"5"},{"idx":"Auto Save","type":"Toggle","value":true},{"idx":"Current Time Type","type":"Dropdown","mutli":false,"value":"Minute"},{"idx":"Auto Claim (Quest)","type":"Toggle","value":false},{"idx":"Them","type":"Dropdown","mutli":false,"value":"Amethyst"},{"idx":"Auto Equip","type":"Toggle","value":false},{"idx":"Current Difficulty","type":"Dropdown","mutli":false,"value":"Easy"},{"idx":"Health to Safe","type":"Slider","value":"55"},{"idx":"Auto Join (Raid)","type":"Toggle","value":false},{"idx":"Current Distance","type":"Slider","value":"6.5"},{"idx":"Transparency","type":"Toggle","value":false},{"idx":"Skill Two","type":"Dropdown","mutli":false,"value":"2"},{"idx":"Auto Hide Gui","type":"Toggle","value":false},{"idx":"Current Assists","type":"Dropdown","mutli":true,"value":{"Assist2":true,"Fruit1":true,"Fruit2":true,"Assist1":true}},{"idx":"Hardcore","type":"Toggle","value":false},{"idx":"Auto Join (Speed Raid)","type":"Toggle","value":false},{"idx":"Acrylic","type":"Toggle","value":false},{"idx":"Auto Join (Raid Challenge)","type":"Toggle","value":false},{"idx":"Auto Equip Character","type":"Toggle","value":false},{"idx":"Webhook URL","type":"Input","text":""},{"idx":"Skill Third","type":"Dropdown","mutli":false,"value":"3"},{"idx":"Auto Skill","type":"Toggle","value":true},{"idx":"Current Skill Distance","type":"Slider","value":"35"},{"idx":"Skill Fifth","type":"Dropdown","mutli":false,"value":"5"},{"idx":"Auto Join (Current Dimension)","type":"Toggle","value":false},{"idx":"Auto Set Distance","type":"Toggle","value":false},{"idx":"Auto Join (Infinite Mode)","type":"Toggle","value":false},{"idx":"Auto Back to Lobby","type":"Toggle","value":false},{"idx":"Send Webhook","type":"Toggle","value":false},{"idx":"Current Attack Method","type":"Dropdown","mutli":false,"value":"Remote"},{"idx":"Skill One","type":"Dropdown","mutli":false,"value":"1"},{"idx":"Dash no cooldown","type":"Toggle","value":false},{"idx":"Auto Retry","type":"Toggle","value":false},{"idx":"Auto Claim (Speed Raid)","type":"Toggle","value":false},{"idx":"Black Screen","type":"Toggle","value":false},{"idx":"Current Time","type":"Slider","value":"15"},{"idx":"Auto Join (Boss Rush)","type":"Toggle","value":false},{"idx":"Auto Upgrade","type":"Toggle","value":false},{"idx":"Auto Safe","type":"Toggle","value":false},{"idx":"Current Rarity","type":"Dropdown","mutli":true,"value":{"Common":true,"Uncommon":true}},{"idx":"Auto Sell","type":"Toggle","value":false},{"idx":"Auto Join (Highnest)","type":"Toggle","value":false},{"idx":"Current Farm Mode","type":"Dropdown","mutli":false,"value":"Bring Mode"},{"idx":"Webhook Color","type":"Colorpicker","transparency":0,"value":"7d7d7d"},{"idx":"Current Method","type":"Dropdown","mutli":false,"value":"Over"},{"idx":"Friends Only","type":"Toggle","value":false},{"idx":"Dodge Skill","type":"Toggle","value":true},{"idx":"Skill Fourth","type":"Dropdown","mutli":false,"value":"4"},{"idx":"Current Raid","type":"Dropdown","mutli":false,"value":"Titan Raid"}]}
+                                    {"objects":[{"idx":"Current Dimension","type":"Dropdown","mutli":false,"value":"Titan Dimension"},{"idx":"Max Upgrade","type":"Slider","value":"5"},{"idx":"Auto Save","type":"Toggle","value":true},{"idx":"Current Time Type","type":"Dropdown","mutli":false,"value":"Minute"},{"idx":"Auto Claim (Quest)","type":"Toggle","value":false},{"idx":"Them","type":"Dropdown","mutli":false,"value":"Amethyst"},{"idx":"Auto Equip","type":"Toggle","value":false},{"idx":"Current Difficulty","type":"Dropdown","mutli":false,"value":"Easy"},{"idx":"Health to Safe","type":"Slider","value":"55"},{"idx":"Auto Join (Raid)","type":"Toggle","value":false},{"idx":"Current Distance","type":"Slider","value":"6.5"},{"idx":"Transparency","type":"Toggle","value":false},{"idx":"Skill Two","type":"Dropdown","mutli":false,"value":"2"},{"idx":"Auto Hide Gui","type":"Toggle","value":false},{"idx":"Current Assists","type":"Dropdown","mutli":true,"value":{"Assist2":true,"Fruit1":true,"Fruit2":true,"Assist1":true}},{"idx":"Hardcore","type":"Toggle","value":false},{"idx":"Auto Join (Speed Raid)","type":"Toggle","value":false},{"idx":"Acrylic","type":"Toggle","value":false},{"idx":"Auto Join (Raid Challenge)","type":"Toggle","value":false},{"idx":"Auto Equip Character","type":"Toggle","value":false},{"idx":"Webhook URL","type":"Input","text":""},{"idx":"Skill Third","type":"Dropdown","mutli":false,"value":"3"},{"idx":"Auto Skill","type":"Toggle","value":true},{"idx":"Current Skill Distance","type":"Slider","value":"35"},{"idx":"Skill Fifth","type":"Dropdown","mutli":false,"value":"5"},{"idx":"Auto Join (Current Dimension)","type":"Toggle","value":false},{"idx":"Auto Set Distance","type":"Toggle","value":true},{"idx":"Auto Join (Infinite Mode)","type":"Toggle","value":false},{"idx":"Auto Back to Lobby","type":"Toggle","value":false},{"idx":"Send Webhook","type":"Toggle","value":false},{"idx":"Current Attack Method","type":"Dropdown","mutli":false,"value":"Remote"},{"idx":"Skill One","type":"Dropdown","mutli":false,"value":"1"},{"idx":"Dash no cooldown","type":"Toggle","value":false},{"idx":"Auto Retry","type":"Toggle","value":false},{"idx":"Auto Claim (Speed Raid)","type":"Toggle","value":false},{"idx":"Black Screen","type":"Toggle","value":false},{"idx":"Current Time","type":"Slider","value":"15"},{"idx":"Auto Join (Boss Rush)","type":"Toggle","value":false},{"idx":"Auto Upgrade","type":"Toggle","value":false},{"idx":"Auto Safe","type":"Toggle","value":false},{"idx":"Current Rarity","type":"Dropdown","mutli":true,"value":{"Common":true,"Uncommon":true}},{"idx":"Auto Sell","type":"Toggle","value":false},{"idx":"Auto Join (Highnest)","type":"Toggle","value":false},{"idx":"Current Farm Mode","type":"Dropdown","mutli":false,"value":"Bring Mode"},{"idx":"Webhook Color","type":"Colorpicker","transparency":0,"value":"7d7d7d"},{"idx":"Current Method","type":"Dropdown","mutli":false,"value":"Over"},{"idx":"Friends Only","type":"Toggle","value":false},{"idx":"Dodge Skill","type":"Toggle","value":true},{"idx":"Skill Fourth","type":"Dropdown","mutli":false,"value":"4"},{"idx":"Current Raid","type":"Dropdown","mutli":false,"value":"Titan Raid"}]}
                                     ]])
                                     task.wait(0.35)
                                     do
@@ -876,7 +914,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
         gam1:AddToggle("Auto Set Distance", {
             Title = "Auto Set Distance",
             Description = "Automatically set the distance calculated from the size of the enemy.",
-            Default = false,
+            Default = true,
             Callback = function (v)
                 if G["Loading (Gui)"] == false and O["Auto Save"].Value == true then SaveManager:Save("Configs") end
             end
@@ -1426,6 +1464,11 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                 end
                 if Fluent.Unloaded then
                     G["Auto Lobby (Actived)"] = false
+                    G["Died"] = false
+                    G["Dodgeing"] = false
+                    G["Bringing"] = false
+                    G["Bringing Infinite"] = false
+                    G["Safe Mode"] = false
                     Playing_Mode = 0
                     bv.Parent = nil
                     if LocalPlr.Character ~= nil then LocalPlr.Character.Humanoid.PlatformStand = false end
@@ -1458,6 +1501,17 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                 return true
             end
         end
+        local function FlameTrailC()
+            local FFF = false
+            if O["Dodge Skill"].Value == true then
+                for i,v in ipairs(Workspace.Folders.Debris:GetChildren()) do
+                    if v.Name == "FlameTrail" and v:FindFirstChild("P1") and v.P1.Texture == "rbxassetid://6169516856" then
+                        FFF = true
+                    end
+                end
+            end
+            return FFF
+        end
 
         coroutine.resume(coroutine.create(function () --// Character Connect
             if (game.PlaceId == 7338881230 or game.PlaceId == 6938803436 or game.PlaceId == 7274690025) or Fluent.Unloaded then coroutine.yield() end
@@ -1488,14 +1542,15 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                 humanoid.Died:Connect(function()
                     G["Dodgeing"] = false
                     G["Bringing"] = false
+                    G["Bringing Infinite"] = false
                     G["Safe Mode"] = false
                     G["Died"] = true
                     Playing_Mode = 0
                     Connect2 =  LocalPlr.CharacterAdded:Connect(function()
-                        if Fluent.Unloaded then coroutine.yield() end
-                        wait(1.15)
-                        Playing_Mode = 0
+                        task.wait(1)
+                        if Fluent.Unloaded then G["Died"] = false coroutine.yield() end
                         G["Died"] = false
+                        Playing_Mode = 0
                         ontounching_ignore()
                         for i, v in ipairs(Workspace.Folders.Monsters:GetChildren()) do
                             if v:FindFirstChildOfClass("BillboardGui") and v:FindFirstChild("Head") then
@@ -1515,24 +1570,26 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                     onCharacterAdded(char)
                 end
             end
+            if GameMap == "Infinite Mode" then IgnoreSpeed = 0.335 end
             Workspace.Folders.Debris.ChildAdded:Connect(function (v)
                 if Fluent.Unloaded then coroutine.yield() end
                 if O["Dodge Skill"].Value == true and (v.Name == "FlameTrail" or table.find({"telegraph"},v.Name:lower())) and not v:IsA("Model") and not G["Bringing"] and not G["Safe Mode"] and not G["Bringing Infinite"] then
                     if v.Name == "FlameTrail" then
-                        task.wait(0.055)
-                        if v:FindFirstChild("P1") == nil then return
-                        elseif v:FindFirstChild("P1") and v.P1.Texture ~= "rbxassetid://6169516856" then return
-                        end
+                        task.wait(0.065)
+                        if v:FindFirstChild("P1") == nil then return end
+                        if v:FindFirstChild("P1") and v.P1.Texture ~= "rbxassetid://6169516856" then return end
                     end
                     local a = v:Clone()
-                    local side = math.clamp(3.75,0,10)
-                    local Sizeto = v.Size + Vector3.new(side,100,side)
+                    local side = math.clamp(3.35,0,10)
+                    local Sizeto = v.Size + Vector3.new(side,87.5,side)
                     a.Size = Vector3.new(0,0,v.Size.Z)
                     if v.ClassName == "MeshPart" then
-                        a.Size = Vector3.new(0,0,100)
-                        Sizeto = v.Size + Vector3.new(side,side,100)
+                        a.Size = Vector3.new(0,0,87.5)
+                        Sizeto = v.Size + Vector3.new(side,side,87.5)
+                    elseif v.Name == "FlameTrail" then
+                        Sizeto = v.Size + Vector3.new(side,87.5,side + 5.5)
                     end
-                    game:GetService("TweenService"):Create(a,TweenInfo.new(0.325),{Size = Sizeto}):Play()
+                    game:GetService("TweenService"):Create(a,TweenInfo.new(IgnoreSpeed),{Size = Sizeto}):Play()
                     a.CFrame = v.CFrame + Vector3.new(0,0,0)
                     a.Anchored = true
                     a.Transparency = 1
@@ -1563,34 +1620,47 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
             while true do
                 pcall(function ()
                     if (game.PlaceId == 7338881230 or game.PlaceId == 6938803436 or game.PlaceId == 7274690025) or Fluent.Unloaded then coroutine.yield() end
-                    if LocalPlr.Character.HumanoidRootPart.Anchored == true then LocalPlr.Character.HumanoidRootPart.Anchored = false end
-                    local is_blacklist = table.find(BlackList_Characters,StatDisplay.CharacterName.Value)
+                    local is_blacklist = table.find(BlackList_Characters,StatDisplay.BattleCharacterName.Value)
                     if auto_farm() == true and teleport_circle() ~= false and not G["Died"] then
-                        tween_function(teleport_circle(), CFrame.new(0, 0, 0), 150)
+                        tween_function(teleport_circle(), CFrame.new(0, 0, 0), 140)
                         Tween_Info:Play()
                         Tween_Info.Completed:Wait()
+                    end
+                    if Boss_Actived() == true and GameMap ~= "Infinite Mode" then
+                        for i, v in ipairs(game.Workspace.Folders.Monsters:GetChildren()) do
+                            if v:FindFirstChildOfClass("BillboardGui") and tonumber(v.EnemyHealthBarGui.HealthText.Text) > 0 and v.EnemyHealthBarGui.Enabled == true then
+                                v:FindFirstChildOfClass("BillboardGui"):Destroy()
+                            end
+                        end
                     end
                     if is_blacklist == nil then
                         if O["Auto Set Distance"].Value == true then
                             if Boss_Actived() == true then
+                                if enemy("Boss").HumanoidRootPart.Size.Y > 80 then
+                                    G["B Y"] = enemy("Boss").HumanoidRootPart
+                                    G["B -Y"] = - enemy("Boss").HumanoidRootPart
+                                elseif enemy("Boss").HumanoidRootPart.Size.Y < 80 then
+                                    G["B Y"] = enemy("Boss").Head.Size.Y + 5.75
+                                    G["B -Y"] = - (enemy("Boss").LowerTorso.Size.Y + enemy("Boss").HumanoidRootPart.Size.Y + 5.55)
+                                end
                                 if O["Current Method"].Value == "Over" then
-                                    G["Method"] = CFrame.new(0, enemy("Boss").HumanoidRootPart.Size.Y - (enemy("Boss").HumanoidRootPart.Size.Y  - 3.5), 0) * CFrame.Angles(math.rad(-90),0,0)
+                                    G["Method"] = CFrame.new(0, G["B Y"], 0) * CFrame.Angles(math.rad(-90),0,0)
                                 elseif O["Current Method"].Value == "Under" then
-                                    G["Method"] = CFrame.new(0,-enemy("Boss").HumanoidRootPart.Size.Y - (enemy("Boss").HumanoidRootPart.Size.Y - 3.5), 0) * CFrame.Angles(math.rad(90),0,0)
+                                    G["Method"] = CFrame.new(0, G["B -Y"], 0) * CFrame.Angles(math.rad(90),0,0)
                                 elseif O["Current Method"].Value == "Front" then
-                                    G["Method"] = CFrame.new(0, 0, -enemy("Boss").HumanoidRootPart.Size.Z + 4.5) * CFrame.Angles(math.rad(0),1800,0)
+                                    G["Method"] = CFrame.new(0, 0, -(enemy("Boss").HumanoidRootPart.Size.Z + 3.5)) * CFrame.Angles(math.rad(0),1800,0)
                                 elseif O["Current Method"].Value == "Behind" then
-                                    G["Method"] = CFrame.new(0, 0, enemy("Boss").HumanoidRootPart.Size.Z + 4.5)
+                                    G["Method"] = CFrame.new(0, 0, enemy("Boss").HumanoidRootPart.Size.Z + 3.5)
                                 end
                             elseif Boss_Actived() == false then
                                 if O["Current Method"].Value == "Over" then
-                                    G["Method"] = CFrame.new(0, enemy("AllMob").HumanoidRootPart.Size.Y + 4.25, 0) * CFrame.Angles(math.rad(-90),0,0)
+                                    G["Method"] = CFrame.new(0, (enemy("AllMob").Head.Size.Y + 5.75), 0) * CFrame.Angles(math.rad(-90),0,0)
                                 elseif O["Current Method"].Value == "Under" then
-                                    G["Method"] = CFrame.new(0, -enemy("AllMob").HumanoidRootPart.Size.Y - 4.25, 0) * CFrame.Angles(math.rad(90),0,0)
+                                    G["Method"] = CFrame.new(0, - (enemy("AllMob").LowerTorso.Size.Y + enemy("AllMob").HumanoidRootPart.Size.Y + 5.35), 0) * CFrame.Angles(math.rad(90),0,0)
                                 elseif O["Current Method"].Value == "Front" then
-                                    G["Method"] = CFrame.new(0, 0, -enemy("AllMob").HumanoidRootPart.Size.Z + 4.25) * CFrame.Angles(math.rad(0),1800,0)
+                                    G["Method"] = CFrame.new(0, 0, -(enemy("AllMob").HumanoidRootPart.Size.Z + 4)) * CFrame.Angles(math.rad(0),1800,0)
                                 elseif O["Current Method"].Value == "Behind" then
-                                    G["Method"] = CFrame.new(0 ,0 ,enemy("AllMob").HumanoidRootPart.Size.Z + 4.25)
+                                    G["Method"] = CFrame.new(0 ,0 ,enemy("AllMob").HumanoidRootPart.Size.Z + 4)
                                 end
                             end
                         elseif O["Auto Set Distance"].Value == false then
@@ -1661,11 +1731,11 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
 
                     if auto_farm() == true then
                         if not G["Dodgeing"] then
+                            if LocalPlr.Character.Humanoid.PlatformStand == false then LocalPlr.Character.Humanoid.PlatformStand = true end
                             setCollide(false)
-                            LocalPlr.Character.Humanoid.PlatformStand = true
                         elseif G["Dodgeing"] then
+                            if LocalPlr.Character.Humanoid.PlatformStand == true then LocalPlr.Character.Humanoid.PlatformStand = false end
                             setCollide(true)
-                            LocalPlr.Character.Humanoid.PlatformStand = false
                         end
                         local BeenASecond, V3 = false, Vector3.new(0, 0, 0)
                         for _, v in ipairs(LocalPlr.Character:GetDescendants()) do
@@ -1673,6 +1743,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                                 v.Velocity, v.RotVelocity = V3, V3
                             end
                         end
+
                         bv.Parent = LocalPlr.Character.HumanoidRootPart
                         bv.MaxForce = Vector3.new(100000,100000,100000)
                         bv.Velocity = Vector3.new(0,0,0)
@@ -1687,6 +1758,9 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                             end
                         end
                     elseif auto_farm() == false then
+                        Playing_Mode = 0
+                        G["Bringing Infinite"] = false
+                        G["Bringing"] = false
                         bv.Parent = nil
                         if LocalPlr.Character.Humanoid.PlatformStand == true then LocalPlr.Character.Humanoid.PlatformStand = false end
                         if Tween_Info ~= nil then Tween_Info:Cancel() end
@@ -1721,17 +1795,20 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                     if G["Safe Mode"] == true and not G["Died"] and not G["Bringing"] and not G["Bringing Infinite"] then
                         for i,v in pairs(Workspace.Folders.SpawnPoints:GetChildren()) do
                             if v.Name == LocalPlr.RespawnLocation.Name then
-                                tween_function(v, CFrame.new(0, 75, 0), 150)
+                                tween_function(v, CFrame.new(0, 75, 0), 140)
                                 Tween_Info:Play()
                             end
                         end
                     end
-                    if auto_farm() == true and Boss_Actived() == true and teleport_circle() == false and not G["Safe Mode"] and not G["Dodgeing"] and not G["Died"] then
+                    if auto_farm() == true and Boss_Actived() == true and teleport_circle() == false and FlameTrailC() == false and not G["Safe Mode"] and not G["Dodgeing"] and not G["Died"] then
                         repeat
-                            tween_function(enemy("Boss").HumanoidRootPart, G["Method"], 135)
+                            Playing_Mode = 0
+                            G["Bringing"] = false
+                            G["Bringing Infinite"] = false
+                            tween_function(enemy("Boss").HumanoidRootPart, G["Method"], 140)
                             Tween_Info:Play()
                             task.wait(0)
-                        until G["Safe Mode"] == true or G["Dodgeing"] == true or G["Died"] == true or Boss_Actived() == false or auto_farm() == false or teleport_circle() ~= false or Fluent.Unloaded
+                        until G["Safe Mode"] == true or G["Dodgeing"] == true or G["Died"] == true or FlameTrailC() == true or Boss_Actived() == false or auto_farm() == false or teleport_circle() ~= false or Fluent.Unloaded
                         Tween_Info:Cancel()
                     end
                 end)
@@ -1745,11 +1822,11 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                     if auto_farm() == true and Boss_Actived() == false and not G["Dided"] then
                         if enemy_count() == 0 then
                             local Base = game:GetService("Workspace").Folders.SpawnPoints.SpawnLocation1
-                            tween_function(Base, CFrame.new(0, 55, 0) ,150)
+                            tween_function(Base, CFrame.new(0, 55, 0) ,125)
                             Tween_Info:Play()
                         elseif not G["Bringing Infinite"] and not G["Safe Mode"] and not G["Dodgeing"] then
                             repeat
-                                tween_function(enemy("AllMob").HumanoidRootPart, G["Method"], 135)
+                                tween_function(enemy("AllMob").HumanoidRootPart, G["Method"], 125)
                                 Tween_Info:Play()
                                 task.wait(0)
                             until G["Safe Mode"] == true or enemy_count() == 0 or G["Dodgeing"] == true or G["Died"] == true or Boss_Actived() == true or auto_farm() == false or Fluent.Unloaded
@@ -1766,17 +1843,17 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                     if (game.PlaceId == 7338881230 or game.PlaceId == 6938803436 or game.PlaceId == 7274690025) or Fluent.Unloaded or GameMap == "Infinite Mode" then coroutine.yield() end
                     if auto_farm() == true and Boss_Actived() == false and teleport_circle() == false and not G["Died"] then
                         if O["Current Farm Mode"].Value == "Bring Mode" and not G["Spawning Enemy"] then
-                            if Playing_Mode == 0 and enemy("Bring") ~= false then
+                            if Playing_Mode == 0 then
                                 repeat
                                     G["Bringing"] = true
-                                    tween_function(enemy("Bring").HumanoidRootPart, CFrame.new(0,10,0), 150)
+                                    tween_function(enemy("Bring").HumanoidRootPart, CFrame.new(0,10,0), 140)
                                     Tween_Info:Play()
                                     task.wait(0.0875)
                                 until Playing_Mode > 0 or enemy("Bring") == false or auto_farm() == false or G["Spawning Enemy"] == true or G["Died"] == true or Boss_Actived() == true or teleport_circle() ~= false or Fluent.Unloaded
                                 Playing_Mode = 1
                             elseif Playing_Mode == 1 and enemy("Bring") == false then
                                 G["Bringing"] = true
-                                tween_function(enemy_Normal().HumanoidRootPart, CFrame.new(0,50,0), 150)
+                                tween_function(enemy_Normal().HumanoidRootPart, CFrame.new(0,50,0), 140)
                                 Tween_Info:Play()
                                 Tween_Info.Completed:Wait()
                                 task.wait(2.675)
@@ -1784,7 +1861,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                             elseif Playing_Mode == 2 and not G["Safe Mode"] and not G["Dodgeing"] then
                                 repeat
                                     G["Bringing"] = false
-                                    tween_function(enemy("AllMob").HumanoidRootPart, G["Method"], 135)
+                                    tween_function(enemy("AllMob").HumanoidRootPart, G["Method"], 140)
                                     Tween_Info:Play()
                                     task.wait(0)
                                 until Playing_Mode ~= 2 or G["Safe Mode"] == true or G["Dodgeing"] == true or G["Died"] == true or Boss_Actived() == true or auto_farm() == false or teleport_circle() ~= false or Fluent.Unloaded
@@ -1792,7 +1869,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                             end
                         elseif O["Current Farm Mode"].Value == "Normal Mode" and not G["Safe Mode"] and not G["Dodgeing"] then
                             repeat
-                                tween_function(enemy("AllMob").HumanoidRootPart, G["Method"], 135)
+                                tween_function(enemy("AllMob").HumanoidRootPart, G["Method"], 140)
                                 Tween_Info:Play()
                                 task.wait(0)
                             until G["Safe Mode"] == true or G["Dodgeing"] == true or G["Died"] == true or Boss_Actived() == true or auto_farm() == false or teleport_circle() ~= false or Fluent.Unloaded
@@ -1807,9 +1884,12 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
             while true do
                 pcall(function ()
                     if (game.PlaceId == 7338881230 or game.PlaceId == 6938803436 or game.PlaceId == 7274690025) or Fluent.Unloaded then coroutine.yield() end
+
                     if is_usingskill() == 0 and O["Auto Skill"].Value == true and auto_farm() == true and dist_enemy(enemy("AllMob").HumanoidRootPart) <= O["Current Skill Distance"].Value and not G["Safe Mode"] and not G["Bringing"] and not G["Bringing Infinite"] and not G["Died"] then
                         local skill = PlrGui.UniversalGui.UniversalCenterUIFrame.SlotsHolder
-                      if is_usingskill() > 0 then return end
+
+                        if is_usingskill() > 0 then return end
+
                         if skill["Skill"..O["Skill One"].Value].Visible and tonumber(skill["Skill"..O["Skill One"].Value].SkillName.Text) == nil then
                             RemoteEvent:FireServer("UseSkill",{["hrpCFrame"] = CFrame.new(enemy("AllMob").HumanoidRootPart.Position)},tonumber(O["Skill One"].Value))
                         elseif skill["Skill"..O["Skill Two"].Value].Visible and tonumber(skill["Skill"..O["Skill One"].Value].SkillName.Text) ~= nil and tonumber(skill["Skill"..O["Skill Two"].Value].SkillName.Text) == nil then
@@ -1833,12 +1913,14 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                                 end
                             end
                         end
+
                         if O["Current Attack Method"].Value == "Remote" then
                             RemoteEvent:FireServer("UseSkill",{["hrpCFrame"] = CFrame.new(enemy("AllMob").HumanoidRootPart.Position),["attackNumber"] = 4},"BasicAttack")
                         elseif O["Current Attack Method"].Value == "Click" then
                             game:GetService("VirtualUser"):CaptureController()
                             game:GetService("VirtualUser"):Button1Down(Vector2.new(1200,672))
                         end
+
                     end
                 end)
                 task.wait(0.135)
@@ -1847,16 +1929,21 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
         coroutine.resume(coroutine.create(function () --// Cards
             while true do
                 if (game.PlaceId ~= 7338881230 and game.PlaceId ~= 6938803436 and game.PlaceId ~= 7274690025) or Fluent.Unloaded then coroutine.yield() end
-                if O["Auto Equip"].Value == true and NotEquip() == true then
+                if O["Auto Equip"].Value == true and NotEquip() == true and NotEquip() ~= "Zero" then
                     UnEquip()
                     repeat
                         for i,v in ipairs(PlrGui.MainGui.CenterUIFrame.Inventory.Frame.CardInventoryFrame.CardInventoryScrollingFrame:GetChildren()) do
-                            if v:IsA("ImageButton") and v.LayoutOrder <= 3 then
+                            if v:IsA("ImageButton") and v.LayoutOrder <= 3 and v.LayoutOrder ~= 0 then
                                 RemoteFunction:InvokeServer("EquipCard",v.Name)
                             end
                         end
+                        if (StatDisplay.CardsOwned.Value >= 3 and LayoutOrder3("get") < 3) or (StatDisplay.CardsOwned.Value == 2 and LayoutOrder3("get") < 2) then
+                            for i,v in ipairs(LayoutOrder3("val")) do
+                                RemoteFunction:InvokeServer("EquipCard",v)
+                            end
+                        end
                         task.wait(0)
-                    until NotEquip() == false
+                    until NotEquip() == false or O["Auto Equip"].Value == false or Fluent.Unloaded
                 end
                 if O["Auto Upgrade"].Value == true then
                     for i,v in ipairs(StatDisplay:GetChildren()) do
@@ -1869,28 +1956,29 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                             end
                         end
                     end
-
+                    if O["Auto Equip"].Value == true and NotEquip() ~= "Zero" then if NotEquip() == false then return end end
                     for i,v in pairs(CardUpgrade) do
                         if v ~= O["Max Upgrade"].Value then
                             repeat
                                 firesignal(PlrGui.MainGui.CenterUIFrame.Inventory.Frame.CardInventoryFrame.CardInventoryScrollingFrame:FindFirstChild(i).MouseButton1Down)
-                                if O["Max Upgrade"].Value > get_valueCard("Level") and stringofnum(get_value("Gold")) > get_valueCard("Gold") then
+                                if tonumber(O["Max Upgrade"].Value) > tonumber(get_valueCard("Level")) and tonumber(GOLD()) >= tonumber(get_valueCard("Gold")) then
                                     RemoteFunction:InvokeServer("UpgradeCard",i)
                                 end
                                 task.wait(0)
-                            until get_valueCard("Level") >= O["Max Upgrade"].Value or get_valueCard("Gold") > stringofnum(get_value("Gold"))
+                            until tonumber(get_valueCard("Level")) >= tonumber(O["Max Upgrade"].Value) or tonumber(get_valueCard("Gold")) > tonumber(GOLD())
                             CardUpgrade[i] = O["Max Upgrade"].Value
                         end
                     end
                 end
                 if O["Auto Sell"].Value == true and #Rarity > 0 and CardStepNumber < G["Number of cards"] then
+                    if O["Auto Equip"].Value == true and NotEquip() ~= "Zero" then if NotEquip() == false then return end end
                     for i,v in ipairs(PlrGui.MainGui.CenterUIFrame.Inventory.Frame.CardInventoryFrame.CardInventoryScrollingFrame:GetChildren()) do
                         if v:IsA("ImageButton") and v.Name ~= "CardInventorySlot" then
                             firesignal(v.MouseButton1Down)
-                            task.wait(0.0085)
+                            task.wait(0.015)
                             CardStepNumber += 1
                             for _,Sell in ipairs(Rarity) do
-                                if PlrGui.MainGui.CenterUIFrame.Inventory.Frame.InvOverlayOuterFrame.CardInventoryOverlay.Rarity.Text == Sell then
+                                if PlrGui.MainGui.CenterUIFrame.Inventory.Frame.InvOverlayOuterFrame.CardInventoryOverlay.Rarity.Text == Sell and (v.Name ~= StatDisplay.Slot1.Value and v.Name ~= StatDisplay.Slot2.Value and v.Name ~= StatDisplay.Slot3.Value) then
                                     RemoteFunction:InvokeServer("SellCard",v.Name)
                                 end
                             end
@@ -1951,7 +2039,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                                 RemoteFunction:InvokeServer("TeleportToRaidChallenge")
                                 coroutine.yield()
                             end
-                            if O["Auto Join (Boss Rush)"].Value == true and Level.Value >= 15 then
+                            if O["Auto Join (Boss Rush)"].Value == true and Level.Value >= 15 and StatDisplay.BossRushFreeEntry.Value ~= 0 then
                                 Fluent:Notify({
                                     Title = "Successfully room created",
                                     Content = "MapName: BossRush".."\nFree Entry Left: "..MainCenterUi.BossRushFrame.BossRushFreeEntry.Text:split(" Free")[1],
@@ -1962,7 +2050,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                                 RemoteFunction:InvokeServer("TeleportToBossRush")
                                 coroutine.yield()
                             end
-                            if O["Auto Join (Infinite Mode)"].Value == true and Level.Value >= 20 then
+                            if O["Auto Join (Infinite Mode)"].Value == true and Level.Value >= 20 and StatDisplay.InfiniteModeReward.Value == false then
                                 Fluent:Notify({
                                     Title = "Successfully room created",
                                     Content = "MapName: Infinite Mode".."\nDifficulty: Infinite\nFriendsOnly: "..tostring(O["Friends Only"].Value).."\nHardcore: false",
@@ -2161,6 +2249,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                                 game:GetService("TeleportService"):Teleport(6938803436)
                                 task.wait(0.25)
                                 game:GetService("TeleportService"):Teleport(6938803436)
+                                coroutine.yield()
                             elseif O["Current Time Type"].Value == "Minute" and T["M"] >= O["Current Time"].Value then
                                 G["Auto Lobby (Actived)"] = true
                                 Fluent:Notify({
@@ -2173,6 +2262,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                                 game:GetService("TeleportService"):Teleport(6938803436)
                                 task.wait(0.25)
                                 game:GetService("TeleportService"):Teleport(6938803436)
+                                coroutine.yield()
                             elseif O["Current Time Type"].Value == "Hour" and T["H"] >= O["Current Time"].Value then
                                 G["Auto Lobby (Actived)"] = true
                                 Fluent:Notify({
@@ -2185,6 +2275,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                                 game:GetService("TeleportService"):Teleport(6938803436)
                                 task.wait(0.25)
                                 game:GetService("TeleportService"):Teleport(6938803436)
+                                coroutine.yield()
                             end
                         end
                     end
@@ -2231,19 +2322,105 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
                         wait()
                         until not table.find(Item_Rewards,"`None      `")
                     end
-                    if not v:FindFirstChild("Gradient") then
-                        table.insert(Item_Rewards,"`"..v.Name.." [Common]`")
-                    elseif v:FindFirstChild("Gradient") then
-                        if tostring(v.Gradient.Color) == "0 0.352941 1 0.407843 0 1 0.513726 1 0.635294 0 " then
-                            table.insert(Item_Rewards,"`"..v.Name.." [Uncommon]`")
-                        elseif tostring(v.Gradient.Color) == "0 0 0.666667 1 0 1 0.6 0.780392 1 0 " then
-                            table.insert(Item_Rewards,"`"..v.Name.." [Rare]`")
-                        elseif tostring(v.Gradient.Color) == "0 0.666667 0.333333 1 0 1 0.352941 0.494118 1 0 " then
-                            table.insert(Item_Rewards,"`"..v.Name.." [Epic]`")
-                        elseif tostring(v.Gradient.Color) == "0 1 0.380392 0.392157 0 1 1 0.639216 0.278431 0 " then
-                            table.insert(Item_Rewards,"`"..v.Name.." [Legendary]`")
+                    if v.Name == "RewardTemplate" then
+                        if v.RewardImage.Image == "rbxassetid://13406949044" then
+                            table.insert(Item_Rewards,"`Character [Sakura]`")
+                        elseif v.RewardImage.Image == "rbxassetid://12992685998" then
+                            table.insert(Item_Rewards,"`Character [Natsu]`")
+                        elseif v.RewardImage.Image == "rbxassetid://7037255754" then
+                            table.insert(Item_Rewards,"`Character [Killua]`")
+
+                        elseif v.RewardImage.Image == "rbxassetid://7053221313" then
+                            table.insert(Item_Rewards,"`Character [Asta]`")
+                        elseif v.RewardImage.Image == "rbxassetid://16629613718" then
+                            table.insert(Item_Rewards,"`Character [Itadori]`")
+                        elseif v.RewardImage.Image == "rbxassetid://12992687663" then
+                            table.insert(Item_Rewards,"`Character [Akaza]`")
+
+                        elseif v.RewardImage.Image == "rbxassetid://13621197278" then
+                            table.insert(Item_Rewards,"`Character [Sasuke]`")
+                        elseif v.RewardImage.Image == "rbxassetid://7057569994" then
+                            table.insert(Item_Rewards,"`Character [Gray]`")
+                        elseif v.RewardImage.Image == "rbxassetid://16629618004" then
+                            table.insert(Item_Rewards,"`Character [Sukuna]`")
+
+                        elseif v.RewardImage.Image == "rbxassetid://7132704621" then
+                            table.insert(Item_Rewards,"`Character [Rukai]`")
+                        elseif v.RewardImage.Image == "rbxassetid://13621200238" then
+                            table.insert(Item_Rewards,"`Character [Shinra]`")
+                        elseif v.RewardImage.Image == "rbxassetid://15699330111" then
+                            table.insert(Item_Rewards,"`Character [All Might]`")
+
+                        elseif v.RewardImage.Image == "rbxassetid://16834106549" then
+                            table.insert(Item_Rewards,"`Character [Zoro]`")
+                        elseif v.RewardImage.Image == "rbxassetid://13621194902" then
+                            table.insert(Item_Rewards,"`Character [Asuna]`")
+
+                        elseif v.RewardImage.Image == "rbxassetid://7542006362" then
+                            table.insert(Item_Rewards,"`Character [Emiya Archer]`")
+                        elseif v.RewardImage.Image == "rbxassetid://7785010433" then
+                            table.insert(Item_Rewards,"`Character [Kaneki]`")
+
+                        elseif v.RewardImage.Image == "rbxassetid://8270023417" then
+                            table.insert(Item_Rewards,"`Character [Lancer]`")
+                        elseif v.RewardImage.Image == "rbxassetid://9038000341" then
+                            table.insert(Item_Rewards,"`Character [Saber Alter]`")
+
+                        elseif v.RewardImage.Image == "rbxassetid://9672496119" then
+                            table.insert(Item_Rewards,"`Character [Diablo]`")
+                        elseif v.RewardImage.Image == "rbxassetid://13406949528" then
+                            table.insert(Item_Rewards,"`Character [Rimuru]`")
+
+                        elseif v.RewardImage.Image == "rbxassetid://16834116921" then
+                            table.insert(Item_Rewards,"`Character [Power]`")
+                        elseif v.RewardImage.Image == "rbxassetid://17096447919" then
+                            table.insert(Item_Rewards,"`Character [Yamato]`")
+                        elseif v.RewardImage.Image == "rbxassetid://16620398317" then
+                            table.insert(Item_Rewards,"`Character [Sonic]`")
+                        elseif v.RewardImage.Image == "rbxassetid://16745228465" then
+                            table.insert(Item_Rewards,"`Character [Rank ??? Hunter]`")
+
+                        elseif v.RewardImage.Image == "rbxassetid://16832873774" then
+                            table.insert(Item_Rewards,"`Character [Broly]`")
+                        elseif v.RewardImage.Image == "rbxassetid://7401067364" then
+                            table.insert(Item_Rewards,"`Character [Alice]`")
+                        elseif v.RewardImage.Image == "rbxassetid://7386538151" then
+                            table.insert(Item_Rewards,"`Character [Gilgamesh]`")
+                        elseif v.RewardImage.Image == "rbxassetid://7384650558" then
+                            table.insert(Item_Rewards,"`Character [Kokushibo]`")
+
+                        elseif v.RewardImage.Image == "rbxassetid://17524638400" then
+                            table.insert(Item_Rewards,"`Character [RinOkumura]`")
+                        elseif v.RewardImage.Image == "rbxassetid://17257820522" then
+                            table.insert(Item_Rewards,"`Character [Mob]`")
+                        elseif v.RewardImage.Image == "rbxassetid://16913579571" then
+                            table.insert(Item_Rewards,"`Character [Mash]`")
+                        elseif v.RewardImage.Image == "rbxassetid://17076062883" then
+                            table.insert(Item_Rewards,"`Character [Gear 5 Luffy]`")
+                        elseif v.RewardImage.Image == "rbxassetid://7210567835" then
+                            table.insert(Item_Rewards,"`Character [Rengoku]`")
+                        elseif v.RewardImage.Image == "rbxassetid://13621198974" then
+                            table.insert(Item_Rewards,"`Character [Kirito]`")
+                        elseif v.RewardImage.Image == "rbxassetid://16833356947" then
+                            table.insert(Item_Rewards,"`Character [Levi]`")
                         else
-                            table.insert(Item_Rewards,"`"..v.Name.." [Mythic]`")
+                            table.insert(Item_Rewards,"`Character [Unknow]`")
+                        end
+                    else
+                        if not v:FindFirstChild("Gradient") then
+                            table.insert(Item_Rewards,"`"..v.Name.." [Common]`")
+                        elseif v:FindFirstChild("Gradient") then
+                            if tostring(v.Gradient.Color) == "0 0.352941 1 0.407843 0 1 0.513726 1 0.635294 0 " then
+                                table.insert(Item_Rewards,"`"..v.Name.." [Uncommon]`")
+                            elseif tostring(v.Gradient.Color) == "0 0 0.666667 1 0 1 0.6 0.780392 1 0 " then
+                                table.insert(Item_Rewards,"`"..v.Name.." [Rare]`")
+                            elseif tostring(v.Gradient.Color) == "0 0.666667 0.333333 1 0 1 0.352941 0.494118 1 0 " then
+                                table.insert(Item_Rewards,"`"..v.Name.." [Epic]`")
+                            elseif tostring(v.Gradient.Color) == "0 1 0.380392 0.392157 0 1 1 0.639216 0.278431 0 " then
+                                table.insert(Item_Rewards,"`"..v.Name.." [Legendary]`")
+                            else
+                                table.insert(Item_Rewards,"`"..v.Name.." [Mythic]`")
+                            end
                         end
                     end
                 elseif table.find(Currency_Items,v.Name) then
@@ -2267,7 +2444,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Rewards =
             resulteVisible:GetPropertyChangedSignal("Visible"):Connect(function ()
                 if Fluent.Unloaded then coroutine.yield() end
                 if O["Send Webhook"].Value == false or not string.find(O["Webhook URL"].Value,"https://discord.com/api/webhooks") then return end
-                wait(5)
+                wait(3.5)
                 if not table.find(Currency_Rewards,"`None     `") then
                     local name_count
                     local sum
