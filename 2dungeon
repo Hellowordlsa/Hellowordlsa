@@ -1,7 +1,5 @@
 
         repeat wait() until game:IsLoaded()
-
-
         local Player = game:GetService("Players").LocalPlayer;
         local player = game:GetService("Players").LocalPlayer;
         local UIS = game:GetService'UserInputService';
@@ -334,7 +332,31 @@
                 Method = v
             end,
         })
-
+        
+          local Method = Main:CreateDropdown({
+            Name = "Farm Method 2",
+            Options = {"Above", "Front"},
+            CurrentOption = "Select something here",
+            MultiSelection = false,
+            Flag = "Npcs",
+            SectionParent = Settings,
+            Callback = function(v)
+                mode = v
+            end,
+        })
+        
+        local Distance = Main:CreateSlider({
+            Name = "Autofarm Distance",
+            Range = {0, 30},
+            Increment = 1,
+            Suffix = "Studs",
+            CurrentValue = 14,
+            Flag = "Distance",
+            SectionParent = Settings,
+            Callback = function(v)
+            dist = v
+            end,
+        })
 
         local AutoBuyExp = Main:CreateToggle({
             Name = "Inf Block",
@@ -415,25 +437,11 @@
             end
         })
 
-        local KillauraOP = Main:CreateToggle({
-            Name = "Killaura (OP)",
+         local AutoDungeon = Main:CreateToggle({
+            Name = "Auto Dungeon",
             CurrentValue = false,
-            Flag = "BuyWen",
-            SectionParent = Method2,
-            Callback = function(v)
-                getgenv().KillauraOP = v
-                while getgenv().KillauraOP do
-                    Attack1()
-                    wait(3)
-                end
-            end
-        })
-        
-        local AutoDungeonN = Main:CreateToggle({
-            Name = "Auto Dungeon (Method 2)",
-            CurrentValue = false,
-            Flag = "DungeonN", 
-            SectionParent = Method2,
+            Flag = "Dungeon", 
+            SectionParent = Farm,
             Callback = function(v)
                 getgenv().FarmAll = v
                 local Humanoid = Client.Character.Humanoid
@@ -442,6 +450,7 @@
                     if getgenv().FarmAll == false then return end
         
                     local mob = findMob1()
+ 
                     if mobs == nil then
                         while task.wait() do
                             task.wait()
@@ -459,16 +468,114 @@
                                 local character = Client.Character
                                 local hrp = character:WaitForChild("HumanoidRootPart")
                                 
-
+                                if mode == "Above" then
                                     repeat
                                         task.wait()
                                         local character = Client.Character
                                         local hrp = character:WaitForChild("HumanoidRootPart")
                                         local magnitude = (character.HumanoidRootPart.Position - mob:GetModelCFrame().Position).Magnitude
-                                            moveto(mob:GetModelCFrame() * CFrame.new(0, 0, -6) * CFrame.Angles(0, math.rad(180), 0), 300)
 
+                                        if magnitude > 100 then
+                                            local tween = TweenService:Create(hrp, TweenInfo.new(magnitude / 300, Enum.EasingStyle.Linear), {
+                                                CFrame = mob:GetModelCFrame() * CFrame.new(0, tonumber(dist), 0) * CFrame.Angles(math.rad(-90), 0, 0)
+                                            })
+
+                                            tween:Play()
+
+                                            repeat
+                                                magnitude = (character.HumanoidRootPart.Position - mob:GetModelCFrame().Position).Magnitude
+                                                task.wait()
+                                            until magnitude < 100 or getgenv().FarmAll == false
+
+                                            tween:Cancel()
+                                        else
+                                            hrp.CFrame = mob:GetModelCFrame() * CFrame.new(0, tonumber(dist), 0) * CFrame.Angles(math.rad(-90), 0, 0)
+                                        end
 
                                     until not FarmAll or not mob or mob:FindFirstChild("Humanoid").Health <= 0 
+                                elseif mode == "Behind" then
+                                    repeat
+                                        task.wait()
+                                        local character = Client.Character
+                                        local hrp = character:WaitForChild("HumanoidRootPart")
+                                        local magnitude = (character.HumanoidRootPart.Position - mob:GetModelCFrame().Position).Magnitude
+
+                                        if magnitude > 100 then
+                                            local tween = TweenService:Create(hrp, TweenInfo.new(magnitude / 300, Enum.EasingStyle.Linear), {
+                                                CFrame = mob:GetModelCFrame() * CFrame.new(0, 0, tonumber(dist))
+                                            })
+
+                                            tween:Play()
+
+                                            repeat
+                                                magnitude = (character.HumanoidRootPart.Position - mob:GetModelCFrame().Position).Magnitude
+                                                task.wait()
+                                            until magnitude < 100 or getgenv().FarmAll == false
+
+                                            tween:Cancel()
+                                        else
+                                            hrp.CFrame = mob:GetModelCFrame() * CFrame.new(0, 0, tonumber(dist))
+                                        end
+
+                                    until not FarmAll or mob:FindFirstChild("Humanoid").Health <= 0 
+                                elseif mode == "Below" then
+                                    repeat
+                                        task.wait()
+                                        local character = Client.Character
+                                        local hrp = character:WaitForChild("HumanoidRootPart")
+                                        local magnitude = (character.HumanoidRootPart.Position - mob:GetModelCFrame().Position).Magnitude
+
+                                        if magnitude > 100 then
+                                            local tween = TweenService:Create(hrp, TweenInfo.new(magnitude / 300, Enum.EasingStyle.Linear), {
+                                                CFrame = mob:GetModelCFrame() * CFrame.new(0, -tonumber(dist), 0) * CFrame.Angles(math.rad(90), 0, 0)
+                                            })
+
+                                            tween:Play()
+
+                                            repeat
+                                                magnitude = (character.HumanoidRootPart.Position - mob:GetModelCFrame().Position).Magnitude
+                                                task.wait()
+                                            until magnitude < 100
+
+                                            tween:Cancel()
+                                        else
+                                            hrp.CFrame = mob:GetModelCFrame() * CFrame.new(0, -tonumber(dist), 0) * CFrame.Angles(math.rad(90), 0, 0)
+                                        end
+
+                                    until not FarmAll or mob:FindFirstChild("Humanoid").Health <= 0 
+                                elseif mode == "Front" then
+                                    repeat
+                                        task.wait()
+                                        local character = Client.Character
+                                        local hrp = character:WaitForChild("HumanoidRootPart")
+                                        local magnitude = (character.HumanoidRootPart.Position - mob:GetModelCFrame().Position).Magnitude
+
+                                        if magnitude > 100 then
+                                            local tween = TweenService:Create(hrp, TweenInfo.new(magnitude / 300, Enum.EasingStyle.Linear), {
+                                                CFrame = mob:GetModelCFrame() * CFrame.new(0, 0, -tonumber(dist)) * CFrame.Angles(0, math.rad(180), 0)
+                                            })
+
+                                            tween:Play()
+
+                                            repeat
+                                                magnitude = (character.HumanoidRootPart.Position - mob:GetModelCFrame().Position).Magnitude
+                                                task.wait()
+                                            until magnitude < 100 or getgenv().FarmAll == false
+
+                                            tween:Cancel()
+                                        else
+                                            hrp.CFrame = mob:GetModelCFrame() * CFrame.new(0, 0, -tonumber(dist)) * CFrame.Angles(0, math.rad(180), 0)
+                                        end
+
+                                    until not FarmAll or mob:FindFirstChild("Humanoid").Health <= 0 
+                                elseif mode == nil then
+                                    game.StarterGui:SetCore("SendNotification", {
+                                        Title = "Info!",
+                                        Text = "Select the autofarm mode in the dropdown above",
+                                        Icon = "",
+                                        Duration = 2.5
+                                    })
+                                end
                             else
                                 break
                             end
@@ -656,7 +763,6 @@ end)
 
         game.Players.LocalPlayer.Character.Humanoid.Died:Connect(function()
             if _G.EXP then
-                
                 _G.Enabled = false
                 getgenv().FarmAll = false
                 task.wait(15)
@@ -672,7 +778,6 @@ end)
             elseif _G.WEN then
                 _G.Enabled = false
                 getgenv().FarmAll = false
-
                 task.wait(15)
                 game:GetService("ReplicatedStorage").TeleportToShop:FireServer()
                 task.wait(1)
@@ -684,5 +789,4 @@ end)
                 task.wait(0.1)
                 game:GetService("TeleportService"):Teleport(9321822839, Client)  -- replace the numbers with the id of the game you want to teleport to
             end
-            
             end)
