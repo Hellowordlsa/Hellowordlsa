@@ -629,7 +629,7 @@ do
     end)
     local Dropdown = Tabs.AutoFarm:AddDropdown("Ds", {
         Title = "Farmming methods",
-        Values = {"OnTop", "Behind", "Below"},
+        Values = {"Below", "Behind", "OnTop"},
         Multi = false,
         Default = 1,
     })
