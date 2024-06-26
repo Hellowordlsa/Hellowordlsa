@@ -377,6 +377,15 @@ for i,v in pairs(game.Players.LocalPlayer.Character.Head:GetChildren()) do
                             end
                         end
                         end
+if AttackRemote then
+local args = {
+    [1] = false,
+    [2] = Vector3.new(-4798.60009765625, -1684.997314453125, 12096.9677734375),
+    [3] = CFrame.new(-4798.60009765625, -1684.997314453125, 12096.9677734375, -0.9586797952651978, -0.05759342387318611, 0.27859652042388916, 2.347577465755535e-09, 0.9792934060096741, 0.20244640111923218, -0.2844872772693634, 0.19408127665519714, -0.9388288259506226)
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("BladeCombatRemote"):FireServer(unpack(args))
+end
                  
             if accessoryLeg then
                 GetRarity("Accessory", "Legendary")
@@ -619,18 +628,9 @@ do
     Toggle:OnChanged(function()
         Autoattack = Options.ATTACK.Value
     end)
-local Toggle = Tabs.AutoFarm:AddToggle("Auto Random Fruit [Beli]", {Title = "Auto Attack (Remote)", Default = false })
-    Toggle:OnChanged(function(Random)
-        _G.Fruit2 = Random 
-        while _G. Fruit2 do wait()
-local args = {
-    [1] = false,
-    [2] = Vector3.new(-4798.60009765625, -1684.997314453125, 12096.9677734375),
-    [3] = CFrame.new(-4798.60009765625, -1684.997314453125, 12096.9677734375, -0.9586797952651978, -0.05759342387318611, 0.27859652042388916, 2.347577465755535e-09, 0.9792934060096741, 0.20244640111923218, -0.2844872772693634, 0.19408127665519714, -0.9388288259506226)
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("BladeCombatRemote"):FireServer(unpack(args))
-            end
+local Toggle = Tabs.AutoFarm:AddToggle("RemoteAttack", {Title = "Auto Attack (Remote)", Default = false })
+   Toggle:OnChanged(function()
+        AttackRemote = Options.RemoteAttack.Value
         end)
         Tabs.RaidBoss:AddSection("Enel")
      local Toggle = Tabs.RaidBoss:AddToggle("Enelzin", {Title = "Auto Kill Enel", Default = false })
