@@ -566,7 +566,7 @@ local Tabs = {
     AutoFarm = Window:AddTab({ Title = "Main", Icon = "bar-chart" }),
     RaidBoss = Window:AddTab({ Title = "Server Boss", Icon = "swords" }),
     Player = Window:AddTab({ Title = "Player", Icon = "baby" }),
-    TP = Window:AddTab({ Title = "TP", Icon = "chevrons-right" }),
+    TP = Window:AddTab({ Title = "Teleport", Icon = "chevrons-right" }),
     KeyBinds = Window:AddTab({ Title = "Skills", Icon = "battery-charging" }),
     AutoMinigame = Window:AddTab({ Title = "Auto Roll Stuff", Icon = "scroll" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "home" }),
