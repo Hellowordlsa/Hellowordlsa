@@ -1519,6 +1519,11 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Number, Currency_Rew
                     if v:FindFirstChild("P1") and v.P1.Texture ~= "rbxassetid://6169516856" then return end
                     igname = "FlameTrailIgnore"
                 end
+                if gui_misc("Bossbar") == true then
+                    igspeed = 0.15
+                else
+                    igspeed = 0.25
+                end
                 local a = v:Clone()
                 local side = math.clamp(3.35,0,10)
                 local Sizeto = v.Size + Vector3.new(side,100,side)
@@ -1536,7 +1541,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Number, Currency_Rew
                 a.CanCollide = true
                 a.Name = igname
                 a.Parent = v.Parent
-                repeat task.wait() until not v.Parent or O["Dodge Skill"].Value == false or G["Bringing"] == true or G["Safe Mode"] == true or G["Bringing Infinite"] == true or enemy_misc("Count") == 0 or local_misc("Dist", enemy("AllMob")[CFramePart(enemy("AllMob"))]) > 70 or Fluent.Unloaded
+                repeat task.wait() until not v.Parent or O["Dodge Skill"].Value == false or G["Bringing"] == true or G["Safe Mode"] == true or G["Bringing Infinite"] == true or enemy_misc("Count") == 0 or Fluent.Unloaded
                 task.wait(0.0475)
                 a:Destroy()
             end
