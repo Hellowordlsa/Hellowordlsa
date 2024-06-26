@@ -373,7 +373,6 @@ if HideNam then
 for i,v in pairs(game.Players.LocalPlayer.Character.Head:GetChildren()) do
                             if v.ClassName == "BillboardGui" then
                                 v:Destroy()
-                                print("Worked?")
                             end
                         end
                         end
@@ -400,9 +399,6 @@ firetouchinterest(v, game.Players.LocalPlayer.Character.HumanoidRootPart, 0)
 firetouchinterest(v, game.Players.LocalPlayer.Character.HumanoidRootPart, 1)
 end
 end
-end
-if TpPlayer then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[PlayerTP].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
 end
                  
             if accessoryLeg then
@@ -729,8 +725,8 @@ spawn(function()
 	while wait() do
 		if _G.Spectate_Player then
 			pcall(function()
-				if game.Players:FindFirstChild(PlayerTP) then
-					game.Workspace.Camera.CameraSubject = game.Players:FindFirstChild(PlayerTP).Character.Humanoid
+				if game.Players[PlayerTP] then
+					game.Workspace.Camera.CameraSubject = game.Players[PlayerTP].Character.Humanoid
 				end
 			end)
 		else
@@ -739,9 +735,18 @@ spawn(function()
 	end
 end)
 
-local ToggleTPPlayer = Tabs.Player:AddToggle("PlayerTp", {Title = "Teleport Player Loop", Default = false })
-Toggle:OnChanged(function()
-        TpPlayer = Options.PlayerTp.Value
+local ToggleTPPlayer = Tabs.Player:AddToggle("ToggleTPPlayer", {Title = "Teleport Player Loop", Default = false })
+
+ToggleTPPlayer:OnChanged(function(tt)
+
+_G.TPPlayer = tt
+
+while _G.TPPlayer do wait()
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[PlayerTP].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
+
+end
+
 end)
 
 map = {}
