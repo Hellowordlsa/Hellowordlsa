@@ -386,6 +386,24 @@ local args = {
 
 game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("BladeCombatRemote"):FireServer(unpack(args))
 end
+if PlayerESP then
+UpdatePlayerChams()
+end
+if UseItems then
+game:GetService("ReplicatedStorage").RemoteEvents.ItemRemote:FireServer()
+game:GetService("ReplicatedStorage").RemoteEvents.SpecializationRemote:FireServer()
+end
+if CollectDrops then
+for i, v in pairs(game:GetService("Workspace").BossChests:GetDescendants()) do
+if v:FindFirstChild("TouchInterest") then
+firetouchinterest(v, game.Players.LocalPlayer.Character.HumanoidRootPart, 0)
+firetouchinterest(v, game.Players.LocalPlayer.Character.HumanoidRootPart, 1)
+end
+end
+end
+if TpPlayer then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[PlayerTP].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
+end
                  
             if accessoryLeg then
                 GetRarity("Accessory", "Legendary")
@@ -637,29 +655,17 @@ local Toggle = Tabs.AutoFarm:AddToggle("RemoteAttack", {Title = "Auto Attack (Re
     Toggle:OnChanged(function()
         EnelBoss = Options.Enelzin.Value
         end)
-        local Toggle = Tabs.RaidBoss:AddToggle("Auto Random Fruit [Beli]", {Title = "Auto Collect Drops", Default = false })
-    Toggle:OnChanged(function(Random)
-        _G.Fruit5 = Random 
-        while _G. Fruit5 do wait()
-for i, v in pairs(game:GetService("Workspace").BossChests:GetDescendants()) do
-if v:FindFirstChild("TouchInterest") then
-firetouchinterest(v, game.Players.LocalPlayer.Character.HumanoidRootPart, 0)
-firetouchinterest(v, game.Players.LocalPlayer.Character.HumanoidRootPart, 1)
-end
-end
-            end
+        local Toggle = Tabs.RaidBoss:AddToggle("DropCollect", {Title = "Auto Collect Drops", Default = false })
+    Toggle:OnChanged(function()
+        CollectDrops = Options.DropCollect.Value
         end)
     local Toggle = Tabs.AutoFarm:AddToggle("GGD", {Title = "Auto Chest", Default = false})
     Toggle:OnChanged(function()
         DoChest = Options.GGD.Value
     end)
-    local Toggle = Tabs.AutoFarm:AddToggle("Auto Random Fruit [Beli]", {Title = "Auto Use Items", Default = false })
-    Toggle:OnChanged(function(Random)
-        _G.Fruit3 = Random 
-        while _G. Fruit3 do wait()
-game:GetService("ReplicatedStorage").RemoteEvents.ItemRemote:FireServer()
-game:GetService("ReplicatedStorage").RemoteEvents.SpecializationRemote:FireServer()
-            end
+    local Toggle = Tabs.AutoFarm:AddToggle("UseItem", {Title = "Auto Use Items", Default = false })
+    Toggle:OnChanged(function()
+        UseItems = Options.UseItem.Value
         end)
 
 Tabs.AutoFarm:AddButton({
@@ -733,12 +739,9 @@ spawn(function()
 	end
 end)
 
-local ToggleTPPlayer = Tabs.Player:AddToggle("ToggleTPPlayer", {Title = "Teleport Player Loop", Default = false })
-ToggleTPPlayer:OnChanged(function(tt)
-_G.TPPlayer = tt
-while _G.TPPlayer do wait()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[PlayerTP].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
-end
+local ToggleTPPlayer = Tabs.Player:AddToggle("PlayerTp", {Title = "Teleport Player Loop", Default = false })
+Toggle:OnChanged(function()
+        TpPlayer = Options.PlayerTp.Value
 end)
 
 map = {}
@@ -974,12 +977,9 @@ end
 end
 
 Tabs.Misc:AddSection("ESP")
-local Toggle = Tabs.Misc:AddToggle("Auto Random Fruit [Beli]", {Title = "Esp Players", Default = false })
-    Toggle:OnChanged(function(Random)
-        _G.PlayerEsp = Random 
-        while _G. PlayerEsp do wait()
-UpdatePlayerChams()
-            end
+local Toggle = Tabs.Misc:AddToggle("EspPlayer", {Title = "Esp Players", Default = false })
+    Toggle:OnChanged(function()
+        PlayerESP = Options.EspPlayer.Value
         end)
  
 Tabs.Misc:AddSection("Misc")
