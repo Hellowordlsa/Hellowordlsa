@@ -1,0 +1,1161 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/1201for/V.G-Hub/main/Extras/Global"))()
+VG.DisableConnection(Error)
+VG.DisableConnection(Idled)
+
+local Equiped = Instance.new("BoolValue")
+Equiped.Parent = Player.Character
+Equiped.Name = "Tool"
+Player.CharacterAdded:Connect(function()
+    wait(2)
+    local Equiped = Instance.new("BoolValue")
+    Equiped.Parent = Player.Character
+    Equiped.Name = "Tool"
+end)
+local Equiped = function(A)
+    if A:IsA("Tool") then
+        Player.Character.Tool.Value = true
+        wait(1)
+        Player.Character.Animate.Disabled = true
+        Player.Character.Animate.Disabled = false
+    end
+end
+
+Player.Character.ChildAdded:Connect(function(v)
+    if v:IsA("Tool") then
+        Equiped(v)
+    end
+end)
+Player.Character.ChildRemoved:Connect(function(v)
+    if v:IsA("Tool") then
+        Player.Character.Tool.Value = false
+    end
+end)
+
+local Quests = {}
+local Codes = {}
+local Mobs = {}
+local Bosses = {}
+local Traits = {
+    "Legendary",
+    "Noble",
+    "Mighty",
+    "Hypersonic",
+    "Perfect",
+    "Inspiring",
+    "Powerful",
+    "Strong",
+    "Resilient",
+    "Slim",
+    "Tank",
+    "Fragile",
+    "Weak",
+    "Muscular",
+    "Sensitive",
+    "Balanced"
+}
+local Races = {
+    "Human",
+    "Kumate Tribe",
+    "Skypiean",
+    "Torino Tribe",
+    "Vermin",
+    "A Bizarre Human",
+    "Human (Hybrid)",
+    "Mink",
+    "Namekian",
+    "Celestial Dragon",
+    "Hybrid-Saiyan",
+    "Ghoul",
+    "Frieza Race",
+    "Fanalis",
+    "Uzumaki Clan",
+    "Saiyan",
+    "Quincy",
+    "Soul Reaper",
+    "Demon"
+}
+local Arrows = {
+    "Lucky Arrow",
+    "Requiem Arrow",
+}
+local Classes = {
+    "Blaster",
+    "Bruiser",
+    "Infiltraitor",
+    "Scrapper",
+    "Tactician",
+    "Generalist"
+}
+local Keys = {
+    "E",
+    "R",
+    "C",
+    "X",
+    "Y"
+}
+local Team = {"Tester", "GH", "Admin/Developer", "Game Director"}
+local RemoteEvents = ReplicatedStorage:WaitForChild("RemoteEvents")
+local BuyItemRemote = RemoteEvents:WaitForChild("BuyItemRemote")
+local BladeCombatRemote = RemoteEvents:WaitForChild("BladeCombatRemote")
+for _,v in next, Player.Quests:GetChildren() do
+    if v:IsA("BoolValue") then
+        table.insert(Quests, v.Name)
+    end
+end
+
+for _,v in next, Player.Codes:GetChildren() do
+    if v:IsA("BoolValue") then
+        table.insert(Codes, v.Name)
+    end
+end
+
+for _,v in next, Workspace.Live:GetChildren() do
+    if v:IsA("Model") and v:FindFirstChild("HumanoidRootPart") then
+        if not table.find(Mobs, v.Name) and not v:FindFirstChild("SetNetworkOwner") then
+            table.insert(Mobs, v.Name)
+        end
+    end
+end
+for _,v in next, Workspace.Live:GetChildren() do
+    if v:IsA("Model") and v:FindFirstChild("HumanoidRootPart") then
+        if not table.find(Bosses, v.Name) and v:FindFirstChild("SetNetworkOwner") then
+            table.insert(Bosses, v.Name)
+        end
+    end
+end
+Stepped:Connect(function()
+    sethiddenproperty(Player, "SimulationRadius", 1000)
+end)
+
+local Hit = function(Mob)
+    BladeCombatRemote:FireServer(false, Vector3.new(Mob.HumanoidRootPart.Position), CFrame.new(Mob.HumanoidRootPart.Position))
+end
+
+local KillMob = function(MobName,HitMethod)
+    for _,v in next, Workspace.Live:GetChildren() do
+        if v.Name == MobName and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+            if HitMethod == "Below" then
+                Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,-7,0) * CFrame.Angles(-180, 0, 0)
+            elseif HitMethod == "OnTop" then
+                VG.Teleport(v.HumanoidRootPart.Position + Vector3.new(0,5,0))
+            elseif HitMethod == "Behind" then
+                VG.Teleport(v.HumanoidRootPart.Position + Vector3.new(0,1,3))
+            end
+            Hit(v)
+            for _,v in next, Player.Backpack:GetChildren() do
+        if v:IsA("Tool") and v:FindFirstChild("Combat Script") then
+            v.Parent = Player.Character
+        end
+    end
+            if v.Humanoid.Health ~= v.Humanoid.MaxHealth then
+                v.Humanoid.Health = 0
+            end
+        end
+    end
+end
+
+local KillMob2 = function(MobName2,HitMethod)
+    for _,v in next, Workspace.Live:GetChildren() do
+        if v.Name == MobName2 and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+            if HitMethod == "Below" then
+                Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,-7,0) * CFrame.Angles(-180, 0, 0)
+            elseif HitMethod == "OnTop" then
+                VG.Teleport(v.HumanoidRootPart.Position + Vector3.new(0,5,0))
+            elseif HitMethod == "Behind" then
+                VG.Teleport(v.HumanoidRootPart.Position + Vector3.new(0,1,3))
+            end
+            Hit(v)
+            for _,v in next, Player.Backpack:GetChildren() do
+        if v:IsA("Tool") and v:FindFirstChild("Combat Script") then
+            v.Parent = Player.Character
+        end
+    end
+            if v.Humanoid.Health ~= v.Humanoid.MaxHealth then
+                v.Humanoid.Health = 0
+            end
+        end
+    end
+end
+
+local Chests = function()
+    for i,v in next, workspace.SpawnLocations:GetChildren() do
+        if v:IsA("BasePart") and v:FindFirstChild("TreasureChest") then
+            firetouchinterest(Player.Character.HumanoidRootPart, v.TreasureChest, 0)
+            firetouchinterest(Player.Character.HumanoidRootPart, v.TreasureChest, 1)
+        end
+    end
+end
+
+
+local KillBoss = function()
+    for _,v in next, Workspace.Live:GetChildren() do
+        if (table.find(Bosses, v.Name) and not BossFarm or v.Name == Boss and BossFarm) and v:FindFirstChild("HumanoidRootPart") then
+            if v:FindFirstChild("Humanoid") and v.Humanoid.Health ~= 0 then
+                VG.Teleport(v.HumanoidRootPart.Position + Vector3.new(0,-5,0))
+                            for _,v in next, Player.Backpack:GetChildren() do
+        if v:IsA("Tool") and v:FindFirstChild("Combat Script") then
+            v.Parent = Player.Character
+        end
+    end
+                Hit(v)
+            end
+        end
+    end
+end
+
+local GetQuest = function(Quest)
+    if not Player.PlayerGui.Menu.QuestFrame.Visible then
+        RemoteEvents:WaitForChild("ChangeQuestRemote"):FireServer(ReplicatedStorage:WaitForChild("Quests"):FindFirstChild(Quest))
+    end
+end
+
+local BuyItem = function(Item)
+    BuyItemRemote:FireServer(Item)
+end
+
+local GetRarity = function(Item, Rarity)
+    local B = Player.Backpack
+    if #B:GetChildren() >= 10 then
+        for _,v in next, B:GetChildren() do
+            if v.Name == "Bag" and v:FindFirstChild("BagPart") and v.BagPart.Overhead.Type.Text:find(Item) then
+                local Rarity2 = v.BagPart.Overhead:FindFirstChild("Rarity")
+                if Rarity2 and Rarity2.Text == Rarity then
+                    v.Parent = Player.Character
+                else
+                    print("No Good")
+                end
+            end
+        end
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("ClearBagsRemote"):FireServer()
+    elseif Item == "Armor" then
+        BuyItem("Random Armor")
+    elseif Item == "Accessory" then
+        BuyItem("Random Accessory")
+    end
+end
+
+local GetArrow = function(Item)
+    local B = Player.Backpack
+    if #B:GetChildren() >= 10 then
+        for _,v in next, B:GetChildren() do
+            if v.Name == Item then
+                v.Parent = Player.Character
+                break
+            else
+                print("Arrow No Good")
+            end
+        end
+        ReplicatedStorage:WaitForChild("RemoteEvents"):WaitForChild("ClearInventoryRemote"):FireServer()
+    else
+        BuyItem("Arrow")
+    end
+end
+
+local RollRace = function()
+    if Player.PlayerValues.Race.Value ~= WantedRace then
+        if not Player.Character:FindFirstChild("Heart") or not Player.Backpack:FindFirstChild("Heart") then
+            BuyItem("Heart")
+        end
+        wait(1)
+        if Player.Backpack:FindFirstChild("Heart") then
+            Player.Backpack:FindFirstChild("Heart").Parent = Player.Character
+            RemoteEvents:WaitForChild("ItemRemote"):FireServer()
+        end
+    end
+end
+
+local RollTrait = function()
+    if Player.PlayerValues.Trait.Value ~= WantedTrait then
+        if not Player.Character:FindFirstChild("Eyeball") or not Player.Backpack:FindFirstChild("Eyeball") then
+            BuyItem("Eyeball")
+        end
+        if Player.Backpack:FindFirstChild("Eyeball") then
+            Player.Backpack:FindFirstChild("Eyeball").Parent = Player.Character
+            RemoteEvents:WaitForChild("ItemRemote"):FireServer()
+        end
+    end
+end
+
+local RollClass = function()
+    if Player.PlayerValues.Class.Value ~= WantedClass then
+        if not Player.Character:FindFirstChild("Brain") or not Player.Backpack:FindFirstChild("Brain") then
+            BuyItem("Brain")
+        end
+        if Player.Backpack:FindFirstChild("Brain") then
+            Player.Backpack:FindFirstChild("Brain").Parent = Player.Character
+            RemoteEvents:WaitForChild("ItemRemote"):FireServer()
+        end
+    end
+end
+
+local LegitHit = function()
+    local l = game:GetService("VirtualUser")
+    l:CaptureController()
+    l:ClickButton1(Vector2.new(9e9,9e9))
+end
+
+
+local FindUchihaEyeball = function()
+    local B = Player.Backpack
+    if #B:GetChildren() >= 10 then
+        for i,v in next, B:GetChildren() do
+            if v.Name == "Uchiha Eyeball" then
+                v.Parent = Player.Character
+                break
+            else
+                print("no Sexy Eye")
+            end
+        end
+        ReplicatedStorage:WaitForChild("RemoteEvents"):WaitForChild("ClearInventoryRemote"):FireServer()
+    else
+        BuyItem("Random Specialization")
+    end
+end
+
+local Hey = function(i, v)
+    return i:GetRoleInGroup(v)
+end
+spawn(function()
+    while wait() do
+        pcall(function()
+            if NoGreat then
+                KillMob(Mob, Methoder)
+            end
+
+            if NoGreat1 then
+                GetQuest(TheQuest)
+            end
+
+            if NoG then
+                for _, key in ipairs(Keys) do
+                    VG.KeyPress(true, key, false, game, 0)
+                    wait(0.1)
+                end
+            end
+            if NoY then
+                VG.KeyPress(true, "Y", false, game, 0)
+            end
+            if NoX then
+                VG.KeyPress(true, "X", false, game, 0)
+            end
+            if NoE then
+                VG.KeyPress(true, "E", false, game, 0)
+            end
+            if NoR then
+                VG.KeyPress(true, "R", false, game, 0)
+            end
+            if NoT then
+                VG.KeyPress(true, "T", false, game, 0)
+            end
+            if NoB then
+                VG.KeyPress(true, "B", false, game, 0)
+            end
+            if NoC then
+                VG.KeyPress(true, "C", false, game, 0)
+            end
+            if NoZ then
+                VG.KeyPress(true, "Z", false, game, 0)
+            end
+            if NoGreat4 then
+                GetRarity("Armor", "Legendary")
+            end
+            if RareYes then
+                GetRarity("Armor", "Rare")
+            end
+
+if TrainingDummy then
+KillMob2("Training dummy", Methoder)
+end
+if EnelBoss then
+KillMob2("Enel", Methoder)
+end
+if HideNam then
+for i,v in pairs(game.Players.LocalPlayer.Character.Head:GetChildren()) do
+                            if v.ClassName == "BillboardGui" then
+                                v:Destroy()
+                                print("Worked?")
+                            end
+                        end
+                        end
+                 
+            if accessoryLeg then
+                GetRarity("Accessory", "Legendary")
+            end
+
+            if accessoryRare then
+                GetRarity("Accessory", "Rare")
+            end
+
+            if NoGreat6 then
+                RollRace(WantedRace)
+            end
+
+            if NoGreat3 or BossFarm then
+                KillBoss()
+            end
+
+            if NoGreat7 then
+                RollClass(WantedClass)
+            end
+
+            if NoGreat5 then
+                GetArrow("Lucky Arrow")
+                GetArrow("Requiem Arrow")
+            end
+
+            if Bread then
+                GetArrow("Lucky Arrow")
+            end
+
+            if Bread2 then
+                GetArrow("Requiem Arrow")
+            end
+
+            if NoGreat8 then
+                RollTrait(WantedTrait)
+            end
+
+            if EquipTools then
+                GetWeapon()
+            end
+            
+            if Autoattack then
+                LegitHit()
+            end
+
+            if FindEye then
+                FindUchihaEyeball()
+            end
+
+            if DoChest then
+                Chests()
+            end
+        end)
+    end
+end)
+
+RunService.Stepped:Connect(function()
+    if Player and table.find(Team, Hey(Player, 33418102)) then
+        while true do end
+    end
+
+    if NoGreat3 or NoGreat or BossFarm then
+        VG.NoClip()
+    end
+end)
+
+repeat wait() until game:IsLoaded()
+local ScreenGui = Instance.new("ScreenGui")
+local Fps = Instance.new("TextLabel")
+local Ping = Instance.new("TextLabel")
+
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Fps.Name = "Fps"
+Fps.Parent = ScreenGui
+Fps.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Fps.BackgroundTransparency = 1.000
+Fps.Position = UDim2.new(0.786138654, 0, 0, 0)
+Fps.Size = UDim2.new(0, 125, 0, 25)
+Fps.Font = Enum.Font.SourceSans
+Fps.TextColor3 = Color3.fromRGB(255, 255, 255)
+Fps.TextScaled = true
+Fps.TextSize = 14.000
+Fps.TextWrapped = true
+
+Ping.Name = "Ping"
+Ping.Parent = ScreenGui
+Ping.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Ping.BackgroundTransparency = 1.000
+Ping.BorderColor3 = Color3.fromRGB(255, 255, 255)
+Ping.Position = UDim2.new(0.700000048, 0, 0, 0)
+Ping.Size = UDim2.new(0, 125, 0, 25)
+Ping.Font = Enum.Font.SourceSans
+Ping.TextColor3 = Color3.fromRGB(253, 253, 253)
+Ping.TextScaled = true
+Ping.TextSize = 14.000
+Ping.TextWrapped = true
+
+local script = Instance.new('LocalScript', Fps)
+local RunService = game:GetService("RunService")
+RunService.RenderStepped:Connect(function(frame) -- This will fire every time a frame is rendered
+script.Parent.Text = ("FPS: "..math.round(1/frame)) 
+end)
+
+local script = Instance.new('LocalScript', Ping)
+local RunService = game:GetService("RunService")
+RunService.RenderStepped:Connect(function(ping) 
+script.Parent.Text = ("Ping: " ..game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString(math.round(2/ping))) -- your ping
+end)
+
+local ScreenGui1 = Instance.new("ScreenGui")
+local ImageButton1 = Instance.new("ImageButton")
+local UICorner = Instance.new("UICorner")
+
+ScreenGui1.Name = "ImageButton"
+ScreenGui1.Parent = game.CoreGui
+ScreenGui1.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+ImageButton1.Parent = ScreenGui1
+ImageButton1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ImageButton1.BorderSizePixel = 0
+ImageButton1.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
+ImageButton1.Size = UDim2.new(0, 50, 0, 50)
+ImageButton1.Draggable = true
+ImageButton1.Image = ""
+ImageButton1.MouseButton1Down:connect(function()
+  game:GetService("VirtualInputManager"):SendKeyEvent(true,305,false,game)
+  game:GetService("VirtualInputManager"):SendKeyEvent(false,305,false,game)
+end)
+
+UICorner.Parent = ImageButton1
+
+do local GUI = game.CoreGui:FindFirstChild("SOMEXHUB");if GUI then GUI:Destroy();end;if _G.Color == nil then
+    _G.Color = Color3.fromRGB(230, 5, 12)
+   end 
+end
+
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "OMG Hub | " .. MarketplaceService:GetProductInfo(game.PlaceId).Name,
+    SubTitle = "by Omg",
+    TabWidth = 160,
+     Size = UDim2.fromOffset(530, 340),
+     Acrylic = false,
+    Theme = "Amethyst",
+    MinimizeKey = Enum.KeyCode.RightControl -- Used when theres no MinimizeKeybind
+})
+
+local Tabs = {
+    AutoFarm = Window:AddTab({ Title = "Main", Icon = "bar-chart" }),
+    RaidBoss = Window:AddTab({ Title = "Server Boss", Icon = "swords" }),
+    Player = Window:AddTab({ Title = "Player", Icon = "baby" }),
+    TP = Window:AddTab({ Title = "TP", Icon = "chevrons-right" }),
+    KeyBinds = Window:AddTab({ Title = "Skills", Icon = "battery-charging" }),
+    AutoMinigame = Window:AddTab({ Title = "Auto Roll Stuff", Icon = "scroll" }),
+    Misc = Window:AddTab({ Title = "Misc", Icon = "home" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+local Options = Fluent.Options
+do
+    Fluent:Notify({
+        Title = "OMG Hub Loaded",
+        Content = "Thanks for Using My Scripts!",
+        Duration = 10 -- Set to nil to make the notification not disappear
+    })
+    local Toggle = Tabs.KeyBinds:AddToggle("Hahaes", {Title = "Auto Skills", Default = false})
+    Toggle:OnChanged(function()
+        NoG = Options.Hahaes.Value
+    end)
+    local Toggle = Tabs.KeyBinds:AddToggle("NoY", {Title = "Press Y", Default = false})
+    Toggle:OnChanged(function()
+        NoY = Options.NoY.Value
+    end)
+    local Toggle = Tabs.KeyBinds:AddToggle("NoX", {Title = "Press X", Default = false})
+    Toggle:OnChanged(function()
+        NoX = Options.NoX.Value
+    end)
+    local Toggle = Tabs.KeyBinds:AddToggle("NoR", {Title = "Press R", Default = false})
+    Toggle:OnChanged(function()
+        NoR = Options.NoR.Value
+    end)
+    local Toggle = Tabs.KeyBinds:AddToggle("NoE", {Title = "Press E", Default = false})
+    Toggle:OnChanged(function()
+        NoE = Options.NoE.Value
+    end)
+    local Toggle = Tabs.KeyBinds:AddToggle("NoB", {Title = "Press B", Default = false})
+    Toggle:OnChanged(function()
+        NoB = Options.NoB.Value
+    end)
+    local Toggle = Tabs.KeyBinds:AddToggle("NoT", {Title = "Press T", Default = false})
+    Toggle:OnChanged(function()
+        NoT = Options.NoT.Value
+    end)
+    local Toggle = Tabs.KeyBinds:AddToggle("NoC", {Title = "Press C", Default = false})
+    Toggle:OnChanged(function()
+        NoC = Options.NoC.Value
+    end)
+    local Toggle = Tabs.KeyBinds:AddToggle("NoZ", {Title = "Press Z", Default = false})
+    Toggle:OnChanged(function()
+        NoZ = Options.NoZ.Value
+    end)
+    local Dropdown = Tabs.AutoFarm:AddDropdown("Ds", {
+        Title = "Mobs",
+        Values = Mobs,
+        Multi = false,
+        Default = 1,
+    })
+
+    Dropdown:SetValue("")
+
+    Dropdown:OnChanged(function(Value)
+        Mob = Value
+    end)
+    local Dropdown = Tabs.AutoFarm:AddDropdown("Ds", {
+        Title = "Farmming methods",
+        Values = {"OnTop", "Behind", "Below"},
+        Multi = false,
+        Default = 1,
+    })
+
+    Dropdown:SetValue("")
+
+    Dropdown:OnChanged(function(Value)
+        Methoder = Value
+    end)
+    local Toggle = Tabs.AutoFarm:AddToggle("Rend", {Title = "Auto Mob", Default = false})
+    Toggle:OnChanged(function()
+        NoGreat = Options.Rend.Value
+    end)
+    local Toggle = Tabs.AutoFarm:AddToggle("Bah", {Title = "Auto Farm Training Dummy", Default = false })
+    Toggle:OnChanged(function()
+        TrainingDummy = Options.Bah.Value
+        end)
+    local Toggle = Tabs.AutoFarm:AddToggle("ATTACK", {Title = "Auto Attack (Normal)", Default = false})
+    Toggle:OnChanged(function()
+        Autoattack = Options.ATTACK.Value
+    end)
+local Toggle = Tabs.AutoFarm:AddToggle("Auto Random Fruit [Beli]", {Title = "Auto Attack (Remote)", Default = false })
+    Toggle:OnChanged(function(Random)
+        _G.Fruit2 = Random 
+        while _G. Fruit2 do wait()
+local args = {
+    [1] = false,
+    [2] = Vector3.new(-4798.60009765625, -1684.997314453125, 12096.9677734375),
+    [3] = CFrame.new(-4798.60009765625, -1684.997314453125, 12096.9677734375, -0.9586797952651978, -0.05759342387318611, 0.27859652042388916, 2.347577465755535e-09, 0.9792934060096741, 0.20244640111923218, -0.2844872772693634, 0.19408127665519714, -0.9388288259506226)
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("BladeCombatRemote"):FireServer(unpack(args))
+            end
+        end)
+        Tabs.RaidBoss:AddSection("Enel")
+     local Toggle = Tabs.RaidBoss:AddToggle("Enelzin", {Title = "Auto Kill Enel", Default = false })
+    Toggle:OnChanged(function()
+        EnelBoss = Options.Enelzin.Value
+        end)
+        local Toggle = Tabs.RaidBoss:AddToggle("Auto Random Fruit [Beli]", {Title = "Auto Collect Drops", Default = false })
+    Toggle:OnChanged(function(Random)
+        _G.Fruit5 = Random 
+        while _G. Fruit5 do wait()
+for i, v in pairs(game:GetService("Workspace").BossChests:GetDescendants()) do
+if v:FindFirstChild("TouchInterest") then
+firetouchinterest(v, game.Players.LocalPlayer.Character.HumanoidRootPart, 0)
+firetouchinterest(v, game.Players.LocalPlayer.Character.HumanoidRootPart, 1)
+end
+end
+            end
+        end)
+    local Toggle = Tabs.AutoFarm:AddToggle("GGD", {Title = "Auto Chest", Default = false})
+    Toggle:OnChanged(function()
+        DoChest = Options.GGD.Value
+    end)
+    local Toggle = Tabs.AutoFarm:AddToggle("Auto Random Fruit [Beli]", {Title = "Auto Use Items", Default = false })
+    Toggle:OnChanged(function(Random)
+        _G.Fruit3 = Random 
+        while _G. Fruit3 do wait()
+game:GetService("ReplicatedStorage").RemoteEvents.ItemRemote:FireServer()
+game:GetService("ReplicatedStorage").RemoteEvents.SpecializationRemote:FireServer()
+            end
+        end)
+
+Tabs.AutoFarm:AddButton({
+        Title = "Freeze Double Exp Boost",
+        Description = "",
+        Callback = function()
+game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("DoubleExperienceTimerRemote"):Destroy()
+end
+    })
+
+Tabs.AutoFarm:AddButton({
+        Title = "Redeem All Codes",
+        Description = "",
+        Callback = function()
+for i, v in pairs(game:GetService("Players").LocalPlayer.Codes:GetChildren()) do
+game:GetService("ReplicatedStorage")["RemoteEvents"]["CodeRemote"]:FireServer(v.Name)
+end
+end
+    })
+
+Plr = {}
+for i,v in pairs(game:GetService("Players"):GetChildren()) do
+    table.insert(Plr,v.Name) 
+end
+
+local DropdownPlr = Tabs.Player:AddDropdown("DropdownPlr", {
+        Title = "Select Player",
+        Values = Plr,
+        Multi = false,
+        Default = false,
+        Callback = function(lolp)
+        PlayerTP = lolp
+        end
+    })
+
+    Tabs.Player:AddButton({
+        Title = "Refresh Player",
+        Description = "",
+        Callback = function()
+        table.clear(Plr)
+for i,v in pairs(game:GetService("Players"):GetChildren()) do
+    table.insert(Plr,v.Name) 
+end
+        end
+    })
+    
+Tabs.Player:AddButton({
+        Title = "Teleport Player",
+        Description = "",
+        Callback = function()
+      			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[PlayerTP].Character.HumanoidRootPart.CFrame
+end
+
+    })
+    
+local Toggle = Tabs.Player:AddToggle("Auto Random Fruit [Beli]", {Title = "Spectate Player", Default = false })
+    Toggle:OnChanged(function(Random)
+        _G.Spectate_Player = Random 
+        end)
+spawn(function()
+	while wait() do
+		if _G.Spectate_Player then
+			pcall(function()
+				if game.Players:FindFirstChild(PlayerTP) then
+					game.Workspace.Camera.CameraSubject = game.Players:FindFirstChild(PlayerTP).Character.Humanoid
+				end
+			end)
+		else
+			game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+		end
+	end
+end)
+
+local ToggleTPPlayer = Tabs.Player:AddToggle("ToggleTPPlayer", {Title = "Teleport Player Loop", Default = false })
+ToggleTPPlayer:OnChanged(function(tt)
+_G.TPPlayer = tt
+while _G.TPPlayer do wait()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[PlayerTP].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
+end
+end)
+
+map = {}
+for i ,v in pairs(workspace.DetectionZones:GetChildren()) do
+table.insert(map,v.Name)
+end
+
+Tabs.TP:AddSection("Tp Island")
+
+Tabs.TP:AddDropdown("island", {
+        Title = "Select Island",
+        Values = map,
+        Multi = false,
+        Default = nil,
+        Callback = function(mt)
+        map = mt
+       end
+   })
+   
+        Tabs.TP:AddButton({
+        Title = "TP To island",
+        Description = "",
+        Callback = function()
+local CFrameEnd = game:GetService("Workspace").DetectionZones[map].CFrame
+    local Time = 0
+    local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character:WaitForChild('HumanoidRootPart'), TweenInfo.new(Time), {CFrame = CFrameEnd})
+    tween:Play()
+    tween.Completed:Wait()
+        end
+    })
+    
+    Tabs.TP:AddSection("Tp Npc")
+    npc = {}
+for i ,v in pairs(game.Workspace.NPCS:GetChildren()) do
+table.insert(npc,v.Name)
+end
+
+Tabs.TP:AddDropdown("Select Npc", {
+        Title = "Select Npc",
+        Values = npc,
+        Multi = false,
+        Default = nil,
+        Callback = function(ms)
+        npc = ms
+       end
+   })
+
+        Tabs.TP:AddButton({
+        Title = "TP To Npc",
+        Description = "",
+        Callback = function()
+      		local CFrameEnd = game:GetService("Workspace").NPCS[npc].WorldPivot 
+    local Time = 0
+    local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character:WaitForChild('HumanoidRootPart'), TweenInfo.new(Time), {CFrame = CFrameEnd})
+    tween:Play()
+    tween.Completed:Wait() 
+        end
+    })
+
+    Tabs.AutoFarm:AddSection("Quest Misc")
+    local Dropdown = Tabs.AutoFarm:AddDropdown("D2s", {
+        Title = "Quests",
+        Values = Quests,
+        Multi = false,
+        Default = 1,
+    })
+
+    Dropdown:SetValue("")
+
+    Dropdown:OnChanged(function(Value)
+        TheQuest = Value
+    end)
+    local Toggle = Tabs.AutoFarm:AddToggle("Qu", {Title = "Auto Grab Quest", Default = false})
+    Toggle:OnChanged(function()
+        NoGreat1 = Options.Qu.Value
+    end)
+    
+Tabs.AutoFarm:AddSection("Boss Misc")
+    local Dropdown = Tabs.AutoFarm:AddDropdown("D23s", {
+        Title = "Bosses",
+        Values = Bosses,
+        Multi = false,
+        Default = 1,
+    })
+
+    Dropdown:SetValue("")
+
+    Dropdown:OnChanged(function(Value)
+        Boss = Value
+    end)
+    local Toggle = Tabs.AutoFarm:AddToggle("Luc2k", {Title = "Auto Selected Boss", Default = false})
+    Toggle:OnChanged(function()
+        BossFarm = Options.Luc2k.Value
+    end)
+    local Toggle = Tabs.AutoFarm:AddToggle("Luck", {Title = "Auto Farm Zoro PTS-TS", Default = false})
+    Toggle:OnChanged(function()
+        NoGreat3 = Options.Luck.Value
+    end)
+    Tabs.AutoMinigame:AddSection("Race Misc")
+    local Dropdown = Tabs.AutoMinigame:AddDropdown("D2s2", {
+        Title = "Races",
+        Values = Races,
+        Multi = false,
+        Default = 1,
+    })
+
+    Dropdown:SetValue("")
+
+    Dropdown:OnChanged(function(Value)
+        WantedRace = Value
+    end)
+    local Toggle = Tabs.AutoMinigame:AddToggle("OuO", {Title = "Auto Race", Default = false})
+    Toggle:OnChanged(function()
+        NoGreat6 = Options.OuO.Value
+    end)
+Tabs.AutoMinigame:AddSection("Classes Misc")
+    local Dropdown = Tabs.AutoMinigame:AddDropdown("D2s22", {
+        Title = "Classes",
+        Values = Classes,
+        Multi = false,
+        Default = 1,
+    })
+
+    Dropdown:SetValue("")
+
+    Dropdown:OnChanged(function(Value)
+        WantedClass = Value
+    end)
+    local Toggle = Tabs.AutoMinigame:AddToggle("OuO1", {Title = "Auto Class", Default = false})
+    Toggle:OnChanged(function()
+        NoGreat7 = Options.OuO1.Value
+    end)
+Tabs.AutoMinigame:AddSection("Traits Misc")
+    local Dropdown = Tabs.AutoMinigame:AddDropdown("D2s212", {
+        Title = "Traits",
+        Values = Traits,
+        Multi = false,
+        Default = 1,
+    })
+
+    Dropdown:SetValue("")
+
+    Dropdown:OnChanged(function(Value)
+        WantedTrait = Value
+    end)
+    local Toggle = Tabs.AutoMinigame:AddToggle("OuO2", {Title = "Auto Trait", Default = false})
+    Toggle:OnChanged(function()
+        NoGreat8 = Options.OuO2.Value
+    end)
+
+   Tabs.AutoMinigame:AddSection("Reroll Misc")
+    local Toggle = Tabs.AutoMinigame:AddToggle("Ou2O", {Title = "Auto Find Uzumaki Eyeball", Default = false})
+    Toggle:OnChanged(function()
+        FindEye = Options.Ou2O.Value
+    end)
+    local Toggle = Tabs.AutoMinigame:AddToggle("Hehe", {Title = "Auto Legendary Armor", Default = false})
+    Toggle:OnChanged(function()
+        NoGreat4 = Options.Hehe.Value
+    end)
+    local Toggle = Tabs.AutoMinigame:AddToggle("Hehe1", {Title = "Auto Rare Armor", Default = false})
+    Toggle:OnChanged(function()
+        RareYes = Options.Hehe1.Value
+    end)
+
+    local Toggle = Tabs.AutoMinigame:AddToggle("Hehe2", {Title = "Auto Legendary Accessory", Default = false})
+    Toggle:OnChanged(function()
+        accessoryLeg = Options.Hehe2.Value
+    end)
+
+    local Toggle = Tabs.AutoMinigame:AddToggle("Hehe3", {Title = "Auto Rare Accessory", Default = false})
+    Toggle:OnChanged(function()
+        accessoryRare = Options.Hehe3.Value
+    end)
+
+    local Toggle = Tabs.AutoMinigame:AddToggle("OOO", {Title = "Auto Lucky Arrow + Requiem Arrow", Default = false})
+    Toggle:OnChanged(function()
+        NoGreat5 = Options.OOO.Value
+    end)
+
+    local Toggle = Tabs.AutoMinigame:AddToggle("OOO0", {Title = "Auto Lucky Arrow", Default = false})
+    Toggle:OnChanged(function()
+        Bread = Options.OOO0.Value
+    end)
+    local Toggle = Tabs.AutoMinigame:AddToggle("OOO01", {Title = "Auto Requiem Arrow", Default = false})
+    Toggle:OnChanged(function()
+        Bread2 = Options.OOO01.Value
+    end)
+    
+ function isnil(thing)
+return (thing == nil)
+end
+local function round(n)
+return math.floor(tonumber(n) + 0.5)
+end
+Number = math.random(1, 1000000)
+function UpdatePlayerChams()
+for i,v in pairs(game:GetService'Players':GetChildren()) do
+    pcall(function()
+        if not isnil(v.Character) then
+            if _G.PlayerEsp then
+                if not isnil(v.Character.Head) and not v.Character.Head:FindFirstChild('NameEsp'..Number) then
+                    local bill = Instance.new('BillboardGui',v.Character.Head)
+                    bill.Name = 'NameEsp'..Number
+                    bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                    bill.Size = UDim2.new(1,200,1,30)
+                    bill.Adornee = v.Character.Head
+                    bill.AlwaysOnTop = true
+                    local name = Instance.new('TextLabel',bill)
+                    name.Font = Enum.Font.GothamSemibold
+                    name.FontSize = "Size14"
+                    name.TextWrapped = true
+                    name.Text = (v.Name ..' \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance')
+                    name.Size = UDim2.new(1,0,1,0)
+                    name.TextYAlignment = 'Top'
+                    name.BackgroundTransparency = 1
+                    name.TextStrokeTransparency = 0.5
+                    if v.Team == game.Players.LocalPlayer.Team then
+                        name.TextColor3 = Color3.new(0,255,0)
+                    else
+                        name.TextColor3 = Color3.new(255,0,0)
+                    end
+                else
+                    v.Character.Head['NameEsp'..Number].TextLabel.Text = (v.Name ..' | '.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance\nHealth : ' .. round(v.Character.Humanoid.Health*100/v.Character.Humanoid.MaxHealth) .. '%')
+                end
+            else
+                if v.Character.Head:FindFirstChild('NameEsp'..Number) then
+                    v.Character.Head:FindFirstChild('NameEsp'..Number):Destroy()
+                end
+            end
+        end
+    end)
+end
+end
+
+Tabs.Misc:AddSection("ESP")
+local Toggle = Tabs.Misc:AddToggle("Auto Random Fruit [Beli]", {Title = "Esp Players", Default = false })
+    Toggle:OnChanged(function(Random)
+        _G.PlayerEsp = Random 
+        while _G. PlayerEsp do wait()
+UpdatePlayerChams()
+            end
+        end)
+ 
+Tabs.Misc:AddSection("Misc")
+local Toggle = Tabs.Misc:AddToggle("HideName", {Title = "Hide Name", Default = false })
+    Toggle:OnChanged(function()
+        HideNam = Options.HideName.Value
+        end)
+Tabs.Misc:AddButton({
+        Title = "Copy Discord Link",
+        Description = "",
+        Callback = function()
+setclipboard("https://discord.gg/TAAfRBGVeg")
+end
+    })
+    
+Tabs.Misc:AddButton({
+        Title = "Remove Effects",
+        Description = "",
+        Callback = function()
+if game.Workspace:FindFirstChild("Effects") then
+game.Workspace.Effects:Destroy()
+end
+end
+    })
+    
+Tabs.Misc:AddButton({
+        Title = "Fps Boost",
+        Description = "",
+        Callback = function()
+local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+local g = game
+local w = g.Workspace
+local l = g.Lighting
+local t = w.Terrain
+t.WaterWaveSize = 0
+t.WaterWaveSpeed = 0
+t.WaterReflectance = 0
+t.WaterTransparency = 0
+l.GlobalShadows = false
+l.FogEnd = 9e9
+l.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+for i,v in pairs(g:GetDescendants()) do
+    if v:IsA("Part") or v:IsA("Union") or v:IsA("MeshPart") then
+        v.Material = "Plastic"
+v.Reflectance = 0
+elseif v:IsA("Decal") and decalsyeeted then 
+v.Transparency = 1
+elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then 
+v.Lifetime = NumberRange.new(0)
+    end
+end
+end
+    })
+    
+Tabs.Misc:AddButton({
+        Title = "No Clip",
+        Description = "",
+        Callback = function()
+local Noclip = true
+local Clip = true
+
+function noclip()
+    Clip = false
+    local function Nocl()
+        if Clip == false and game.Players.LocalPlayer.Character ~= nil then
+            for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
+                    v.CanCollide = false
+                end
+            end
+        end
+        wait(0.21) -- basic optimization
+    end
+    Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
+end
+
+function clip()
+    if Noclip then Noclip:Disconnect() end
+    Clip = true
+end
+
+noclip() -- to toggle noclip() and clip()
+end
+    })
+    
+Tabs.Misc:AddButton({
+        Title = "Rejoin",
+        Description = "",
+        Callback = function()
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+ 
+local Rejoin = coroutine.create(function()
+    local Success, ErrorMessage = pcall(function()
+        TeleportService:Teleport(game.PlaceId, LocalPlayer)
+    end)
+ 
+    if ErrorMessage and not Success then
+        warn(ErrorMessage)
+    end
+end)
+ 
+coroutine.resume(Rejoin)
+end
+    })
+    
+Tabs.Misc:AddButton({
+        Title = "Server Hop",
+        Description = "",
+        Callback = function()
+local Http = game:GetService("HttpService")
+local TPS = game:GetService("TeleportService")
+local Api = "https://games.roblox.com/v1/games/"
+
+local _place = game.PlaceId
+local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
+function ListServers(cursor)
+   local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+   return Http:JSONDecode(Raw)
+end
+
+local Server, Next; repeat
+   local Servers = ListServers(Next)
+   Server = Servers.data[2]
+   Next = Servers.nextPageCursor
+until Server
+
+TPS:TeleportToPlaceInstance(_place,Server.id,game.Players.LocalPlayer)
+end
+    })
+    
+ Tabs.Misc:AddButton({
+        Title = "Speed 75",
+        Description = "",
+        Callback = function()
+_G.HackedWalkSpeed = 75
+
+local Plrs = game:GetService("Players")
+
+local MyPlr = Plrs.LocalPlayer
+local MyChar = MyPlr.Character
+
+if MyChar then
+local Hum = MyChar.Humanoid
+Hum.Changed:connect(function()
+Hum.WalkSpeed = _G.HackedWalkSpeed
+end)
+Hum.WalkSpeed = _G.HackedWalkSpeed
+end
+
+
+MyPlr.CharacterAdded:connect(function(Char)
+MyChar = Char
+repeat wait() until Char:FindFirstChild("Humanoid")
+local Hum = Char.Humanoid
+Hum.Changed:connect(function()
+Hum.WalkSpeed = _G.HackedWalkSpeed
+end)
+Hum.WalkSpeed = _G.HackedWalkSpeed
+end)
+
+-- end of script :)
+end
+    })
+end
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({})
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+Window:SelectTab(1)
+
+SaveManager:LoadAutoloadConfig()
