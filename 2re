@@ -400,6 +400,15 @@ firetouchinterest(v, game.Players.LocalPlayer.Character.HumanoidRootPart, 1)
 end
 end
 end
+if KillInsta then
+for _, v in pairs(Workspace.Live:GetDescendants()) do
+                if v:IsA("Model") and v.Name == Mob and v:FindFirstChild("Humanoid") and v.Humanoid.Health < v.Humanoid.MaxHealth then
+                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 112412400000)
+sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 112412400000)
+                            v.Humanoid.Health = 0
+                end
+                end
+                end
                  
             if accessoryLeg then
                 GetRarity("Accessory", "Legendary")
@@ -641,6 +650,10 @@ do
     local Toggle = Tabs.AutoFarm:AddToggle("ATTACK", {Title = "Auto Attack (Normal)", Default = false})
     Toggle:OnChanged(function()
         Autoattack = Options.ATTACK.Value
+    end)
+    local Toggle = Tabs.AutoFarm:AddToggle("InstaKillBah", {Title = "Insta Kill Selected Mob", Default = false})
+    Toggle:OnChanged(function()
+        KillInsta = Options.InstaKillBah.Value
     end)
 local Toggle = Tabs.AutoFarm:AddToggle("RemoteAttack", {Title = "Auto Attack (Remote)", Default = false })
    Toggle:OnChanged(function()
