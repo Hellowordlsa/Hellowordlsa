@@ -557,8 +557,8 @@ local Window = Fluent:CreateWindow({
     Title = "OMG Hub | " .. MarketplaceService:GetProductInfo(game.PlaceId).Name,
     SubTitle = "by Omg",
     TabWidth = 160,
-     Size = UDim2.fromOffset(530, 340),
-     Acrylic = false,
+    Size = UDim2.fromOffset(530, 340),
+    Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
     Theme = "Amethyst",
     MinimizeKey = Enum.KeyCode.RightControl -- Used when theres no MinimizeKeybind
 })
