@@ -210,6 +210,7 @@ local GetQuest = function(Quest)
 end
 
 local BuyItem = function(Item)
+wait(1)
     BuyItemRemote:FireServer(Item)
 end
 
@@ -226,6 +227,7 @@ local GetRarity = function(Item, Rarity)
                 end
             end
         end
+        wait(1)
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("ClearBagsRemote"):FireServer()
     elseif Item == "Armor" then
         BuyItem("Random Armor")
@@ -245,6 +247,7 @@ local GetArrow = function(Item)
                 print("Arrow No Good")
             end
         end
+        wait(1)
         ReplicatedStorage:WaitForChild("RemoteEvents"):WaitForChild("ClearInventoryRemote"):FireServer()
     else
         BuyItem("Arrow")
@@ -254,9 +257,9 @@ end
 local RollRace = function()
     if Player.PlayerValues.Race.Value ~= WantedRace then
         if not Player.Character:FindFirstChild("Heart") or not Player.Backpack:FindFirstChild("Heart") then
+        wait(1)
             BuyItem("Heart")
         end
-        wait(1)
         if Player.Backpack:FindFirstChild("Heart") then
             Player.Backpack:FindFirstChild("Heart").Parent = Player.Character
             RemoteEvents:WaitForChild("ItemRemote"):FireServer()
@@ -267,6 +270,7 @@ end
 local RollTrait = function()
     if Player.PlayerValues.Trait.Value ~= WantedTrait then
         if not Player.Character:FindFirstChild("Eyeball") or not Player.Backpack:FindFirstChild("Eyeball") then
+        wait(1)
             BuyItem("Eyeball")
         end
         if Player.Backpack:FindFirstChild("Eyeball") then
@@ -279,6 +283,7 @@ end
 local RollClass = function()
     if Player.PlayerValues.Class.Value ~= WantedClass then
         if not Player.Character:FindFirstChild("Brain") or not Player.Backpack:FindFirstChild("Brain") then
+        wait(1)
             BuyItem("Brain")
         end
         if Player.Backpack:FindFirstChild("Brain") then
@@ -306,6 +311,7 @@ local FindUchihaEyeball = function()
                 print("no Sexy Eye")
             end
         end
+        wait(1)
         ReplicatedStorage:WaitForChild("RemoteEvents"):WaitForChild("ClearInventoryRemote"):FireServer()
     else
         BuyItem("Random Specialization")
@@ -560,7 +566,7 @@ local Window = Fluent:CreateWindow({
     Size = UDim2.fromOffset(530, 340),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
     Theme = "Amethyst",
-    MinimizeKey = nil
+    MinimizeKey = Enum.KeyCode.RightControl -- Used when theres no MinimizeKeybind
 })
 
 local Tabs = {
