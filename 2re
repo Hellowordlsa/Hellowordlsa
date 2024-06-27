@@ -226,6 +226,7 @@ local GetRarity = function(Item, Rarity)
                 end
             end
         end
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("ClearBagsRemote"):FireServer()
     elseif Item == "Armor" then
         BuyItem("Random Armor")
     elseif Item == "Accessory" then
@@ -244,6 +245,7 @@ local GetArrow = function(Item)
                 print("Arrow No Good")
             end
         end
+        ReplicatedStorage:WaitForChild("RemoteEvents"):WaitForChild("ClearInventoryRemote"):FireServer()
     else
         BuyItem("Arrow")
     end
@@ -304,6 +306,7 @@ local FindUchihaEyeball = function()
                 print("no Sexy Eye")
             end
         end
+        ReplicatedStorage:WaitForChild("RemoteEvents"):WaitForChild("ClearInventoryRemote"):FireServer()
     else
         BuyItem("Random Specialization")
     end
