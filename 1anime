@@ -76,7 +76,6 @@ end)
     end)
     Sector2:AddToggle("AutoUseFuitSkill", false, function(t)
 		_G.AutoFruit = t
-		
 		if t then
 			if game.PlaceId == 6938803436 or game.PlaceId == 7274690025 or game.PlaceId == 7338881230 then return end
 			local function autoFruit()
@@ -94,11 +93,9 @@ end)
 					end
 				end
 				repeat task.wait() until fr1 ~= nil and fr2 ~= nil
-
 				if _G.AutoFruit == true then
 					local cd1, cd2 = fr1:FindFirstChild('SkillName'), fr2:FindFirstChild('SkillName');
 					local connections = {};
-
 					local function fruit1()
 						local events = { "MouseButton1Click", "MouseButton1Down", "Activated" }
 						for i, v in next, events do firesignal(fr1[v]) end
@@ -107,9 +104,7 @@ end)
 						local events = { "MouseButton1Click", "MouseButton1Down", "Activated" }
 						for i, v in next, events do firesignal(fr2[v]) end
 					end
-
 					fruit1(); fruit2();
-
 					connections[1] = cd1.Changed:Connect(function()
 						if cd1.Visible == false then
 							fruit1()
@@ -120,7 +115,6 @@ end)
 							fruit2()
 						end
 					end)
-
 					while task.wait(0.2) do
 						if _G.AutoFruit == false then
 							_G.__autoFruit = false 
@@ -1791,9 +1785,9 @@ end)
 		game:GetService("VirtualUser"):ClickButton2(Vector2.new())
 	end)
     ClickTP()
+
 	local config = library:ConfigSystem("MapName")
 config:Load()
-
 while wait() do
     pcall(function()
         local config = library:ConfigSystem("MapName")
