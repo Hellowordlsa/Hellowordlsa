@@ -2016,7 +2016,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Number, Currency_Rew
                             RemoteFunction:InvokeServer("TeleportToRaidChallenge")
                             coroutine.yield()
                         end
-                        if O["Auto Join (Boss Rush)"].Value == true and Level.Value >= 15 and StatDisplay.BossRushFreeEntry.Value ~= 0 then
+                        if O["Auto Join (Boss Rush)"].Value == true and Level.Value >= 15 then
                             Fluent:Notify({
                                 Title = "Successfully room created",
                                 Content = "MapName: BossRush".."\nFree Entry Left: "..MainCenterUi.BossRushFrame.BossRushFreeEntry.Text:split(" Free")[1],
@@ -2027,7 +2027,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Number, Currency_Rew
                             RemoteFunction:InvokeServer("TeleportToBossRush")
                             coroutine.yield()
                         end
-                        if O["Auto Join (Infinite Mode)"].Value == true and Level.Value >= 20 and StatDisplay.InfiniteModeReward.Value == false then
+                        if O["Auto Join (Infinite Mode)"].Value == true and Level.Value >= 20 then
                             Fluent:Notify({
                                 Title = "Successfully room created",
                                 Content = "MapName: Infinite Mode".."\nDifficulty: Infinite\nFriendsOnly: "..tostring(O["Friends Only"].Value).."\nHardcore: false",
