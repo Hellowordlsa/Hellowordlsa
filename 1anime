@@ -21,7 +21,6 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
     end
     local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Omgshit/Scripts/main/GUI2"))()
     local Window = library:CreateWindow("OMG Hub | "..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name.." | BETA!")
-    local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/MythicRBX/MythicLib/main/Addons/Fluent.lua"))()
     local Tab1 = Window:CreateTab("Main")
 	local Sector1 = Tab1:CreateSector("Farming", "left")
     Sector1:AddDropdown("MapSelection(AutoUpdate!)",MapSelection, false ,false , function(v)
@@ -262,7 +261,7 @@ if _G.AutoSpinWhaerel then
 pcall(function()
 
 
-if not game.PlaceId == 7274690025 or game.PlaceId == 6938803436 then
+if not game.PlaceId == 6938803436 then
 if game.Workspace:FindFirstChild("GameMap") then
 game.Workspace.GameMap:Destroy()
 end
@@ -1665,6 +1664,7 @@ end)
 
 end
 Setting1:AddButton("AutoExecuteScript-Off" , function()
+local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/MythicRBX/MythicLib/main/Addons/Fluent.lua"))()
     getgenv().AutoLoadTP = false
     task.spawn(function()
 	Fluent:Notify({
