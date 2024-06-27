@@ -1651,9 +1651,9 @@ end)
     local exec = tostring(identifyexecutor())
 
     if exec == "Synapse X" then
-        syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Omgshit/Scripts/main/Anime%20Dimensions'))()")
+        syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Hellowordlsa/Hellowordlsa/main/1anime'))()")
     else
-        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Omgshit/Scripts/main/Anime%20Dimensions'))()")
+        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Hellowordlsa/Hellowordlsa/main/1anime'))()")
     end
 
 end
