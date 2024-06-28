@@ -865,7 +865,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Number, Currency_Rew
         end
     })
     Main_AddSection:AddToggle("Auto Set Distance", {
-        Title = "Auto Set Distance",
+        Title = "Auto Set Distance [BUGGY]",
         Description = "Automatically set the distance calculated from the size of the enemy.",
         Default = true,
         Callback = function (v)
