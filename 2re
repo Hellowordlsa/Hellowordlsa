@@ -569,7 +569,6 @@ local Tabs = {
     Player = Window:AddTab({ Title = "Player", Icon = "baby" }),
     TP = Window:AddTab({ Title = "Teleport", Icon = "chevrons-right" }),
     KeyBinds = Window:AddTab({ Title = "Skills", Icon = "battery-charging" }),
-    AutoMinigame = Window:AddTab({ Title = "Auto Roll Stuff", Icon = "scroll" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "home" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
@@ -858,95 +857,6 @@ Tabs.AutoFarm:AddSection("Boss Misc")
     local Toggle = Tabs.AutoFarm:AddToggle("Luck", {Title = "Auto Farm Zoro PTS-TS", Default = false})
     Toggle:OnChanged(function()
         NoGreat3 = Options.Luck.Value
-    end)
-    Tabs.AutoMinigame:AddSection("Race Misc")
-    local Dropdown = Tabs.AutoMinigame:AddDropdown("D2s2", {
-        Title = "Races",
-        Values = Races,
-        Multi = false,
-        Default = 1,
-    })
-
-    Dropdown:SetValue("")
-
-    Dropdown:OnChanged(function(Value)
-        WantedRace = Value
-    end)
-    local Toggle = Tabs.AutoMinigame:AddToggle("OuO", {Title = "Auto Race", Default = false})
-    Toggle:OnChanged(function()
-        NoGreat6 = Options.OuO.Value
-    end)
-Tabs.AutoMinigame:AddSection("Classes Misc")
-    local Dropdown = Tabs.AutoMinigame:AddDropdown("D2s22", {
-        Title = "Classes",
-        Values = Classes,
-        Multi = false,
-        Default = 1,
-    })
-
-    Dropdown:SetValue("")
-
-    Dropdown:OnChanged(function(Value)
-        WantedClass = Value
-    end)
-    local Toggle = Tabs.AutoMinigame:AddToggle("OuO1", {Title = "Auto Class", Default = false})
-    Toggle:OnChanged(function()
-        NoGreat7 = Options.OuO1.Value
-    end)
-Tabs.AutoMinigame:AddSection("Traits Misc")
-    local Dropdown = Tabs.AutoMinigame:AddDropdown("D2s212", {
-        Title = "Traits",
-        Values = Traits,
-        Multi = false,
-        Default = 1,
-    })
-
-    Dropdown:SetValue("")
-
-    Dropdown:OnChanged(function(Value)
-        WantedTrait = Value
-    end)
-    local Toggle = Tabs.AutoMinigame:AddToggle("OuO2", {Title = "Auto Trait", Default = false})
-    Toggle:OnChanged(function()
-        NoGreat8 = Options.OuO2.Value
-    end)
-
-   Tabs.AutoMinigame:AddSection("Reroll Misc")
-    local Toggle = Tabs.AutoMinigame:AddToggle("Ou2O", {Title = "Auto Find Uzumaki Eyeball", Default = false})
-    Toggle:OnChanged(function()
-        FindEye = Options.Ou2O.Value
-    end)
-    local Toggle = Tabs.AutoMinigame:AddToggle("Hehe", {Title = "Auto Legendary Armor", Default = false})
-    Toggle:OnChanged(function()
-        NoGreat4 = Options.Hehe.Value
-    end)
-    local Toggle = Tabs.AutoMinigame:AddToggle("Hehe1", {Title = "Auto Rare Armor", Default = false})
-    Toggle:OnChanged(function()
-        RareYes = Options.Hehe1.Value
-    end)
-
-    local Toggle = Tabs.AutoMinigame:AddToggle("Hehe2", {Title = "Auto Legendary Accessory", Default = false})
-    Toggle:OnChanged(function()
-        accessoryLeg = Options.Hehe2.Value
-    end)
-
-    local Toggle = Tabs.AutoMinigame:AddToggle("Hehe3", {Title = "Auto Rare Accessory", Default = false})
-    Toggle:OnChanged(function()
-        accessoryRare = Options.Hehe3.Value
-    end)
-
-    local Toggle = Tabs.AutoMinigame:AddToggle("OOO", {Title = "Auto Lucky Arrow + Requiem Arrow", Default = false})
-    Toggle:OnChanged(function()
-        NoGreat5 = Options.OOO.Value
-    end)
-
-    local Toggle = Tabs.AutoMinigame:AddToggle("OOO0", {Title = "Auto Lucky Arrow", Default = false})
-    Toggle:OnChanged(function()
-        Bread = Options.OOO0.Value
-    end)
-    local Toggle = Tabs.AutoMinigame:AddToggle("OOO01", {Title = "Auto Requiem Arrow", Default = false})
-    Toggle:OnChanged(function()
-        Bread2 = Options.OOO01.Value
     end)
     
  function isnil(thing)
