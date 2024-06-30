@@ -1758,7 +1758,7 @@ local StatDisplay, Level, CrazyDayF, Item_Rewards, Currency_Number, Currency_Rew
             pcall(function ()
                 if (game.PlaceId == 7338881230 or game.PlaceId == 6938803436 or game.PlaceId == 7274690025) or Fluent.Unloaded then coroutine.yield() end
                 local a = PlayerGui.UniversalGui.UniversalCenterUIFrame.ResultUI
-                if O["Auto Retry"].Value == true and a.Visible == true and a.Frame.RetryDungeonButton.Visible == true and tonumber(local_misc("Stage")) > 1 then
+                if O["Auto Retry"].Value == true and a.Visible == true and a.Frame.RetryDungeonButton.Visible == true then
                     firesignal(a.Frame.RetryDungeonButton.MouseButton1Down)
                 elseif O["Auto Retry"].Value == false and a.Visible == true and a.Frame.LeaveDungeonButton.Visible == true then
                     firesignal(a.Frame.LeaveDungeonButton.MouseButton1Down)
