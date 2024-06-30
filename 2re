@@ -554,7 +554,7 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 local Window = Fluent:CreateWindow({
-    Title = "OMG Hub | " .. MarketplaceService:GetProductInfo(game.PlaceId).Name,
+    Title = "OMG Hub | Re:XL",
     SubTitle = "by Omg",
     TabWidth = 160,
     Size = UDim2.fromOffset(530, 340),
