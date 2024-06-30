@@ -90,9 +90,9 @@ if _G.AutoSpinWheel then
 
 pcall(function()
 
-
+if not game.PlaceId == 6938803436 then
 game:GetService("VirtualInputManager"):SendKeyEvent(true,"Z",false,game) game:GetService("VirtualInputManager"):SendKeyEvent(true,"X",false,game)
-
+end
 
 end)
 
