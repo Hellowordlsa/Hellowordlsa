@@ -90,9 +90,7 @@ if _G.AutoSpinWheel then
 
 pcall(function()
 
-if not game.PlaceId == 6938803436 then
 game:GetService("VirtualInputManager"):SendKeyEvent(true,"Z",false,game) game:GetService("VirtualInputManager"):SendKeyEvent(true,"X",false,game)
-end
 
 end)
 
@@ -226,10 +224,8 @@ if _G.AutoSpinWhaerel then
 pcall(function()
 
 
-if not game.PlaceId == 6938803436 then
 if game.Workspace:FindFirstChild("GameMap") then
 game.Workspace.GameMap:Destroy()
-end
 end
 
 
@@ -807,7 +803,7 @@ end)
 }
 
 game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("MainRemoteFunction"):InvokeServer(unpack(args))
-                            wait(600)
+                            wait()
                         end
                     end
                 end)
