@@ -145,7 +145,7 @@ local KillMob = function(MobName,HitMethod)
             if v.Humanoid.Health > 0 then
             local TweenService = game:GetService("TweenService")
 local Tw = TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(0, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0), 
-{CFrame = CFrame.new(2517, 704, 1674)}):Play()
+{CFrame = CFrame.new(1533, 775, 3160)}):Play()
 end
             for _,v in next, Player.Backpack:GetChildren() do
         if v:IsA("Tool") and v:FindFirstChild("Combat Script") then
@@ -173,7 +173,7 @@ local KillMob2 = function(MobName2,HitMethod)
             if v.Humanoid.Health > 0 then
             local TweenService = game:GetService("TweenService")
 local Tw = TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(0, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0), 
-{CFrame = CFrame.new(2517, 704, 1674)}):Play()
+{CFrame = CFrame.new(1533, 775, 3160)}):Play()
 end
             for _,v in next, Player.Backpack:GetChildren() do
         if v:IsA("Tool") and v:FindFirstChild("Combat Script") then
@@ -210,7 +210,7 @@ local KillBoss = function()
     if v.Humanoid.Health > 0 then
             local TweenService = game:GetService("TweenService")
 local Tw = TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(0, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0), 
-{CFrame = CFrame.new(2517, 704, 1674)}):Play()
+{CFrame = CFrame.new(1533, 775, 3160)}):Play()
 end
                 Hit(v)
             end
