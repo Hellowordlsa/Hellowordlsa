@@ -135,13 +135,18 @@ local KillMob = function(MobName,HitMethod)
     for _,v in next, Workspace.Live:GetChildren() do
         if v.Name == MobName and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
             if HitMethod == "Below" then
-                Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,-9,0) * CFrame.Angles(math.rad(90),0,0)
+                Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,-10,0) * CFrame.Angles(math.rad(90),0,0)
             elseif HitMethod == "OnTop" then
                 Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,7,0) * CFrame.Angles(math.rad(-90),0,0)
             elseif HitMethod == "Behind" then
                 Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,0,5)
             end
             Hit(v)
+            if v.Humanoid.Health > 0 then
+            local TweenService = game:GetService("TweenService")
+local Tw = TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(0, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0), 
+{CFrame = CFrame.new(2517, 704, 1674)}):Play()
+end
             for _,v in next, Player.Backpack:GetChildren() do
         if v:IsA("Tool") and v:FindFirstChild("Combat Script") then
             v.Parent = Player.Character
@@ -158,13 +163,18 @@ local KillMob2 = function(MobName2,HitMethod)
     for _,v in next, Workspace.Live:GetChildren() do
         if v.Name == MobName2 and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
             if HitMethod == "Below" then
-                Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,-9,0) * CFrame.Angles(math.rad(90),0,0)
+                Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,-10,0) * CFrame.Angles(math.rad(90),0,0)
             elseif HitMethod == "OnTop" then
                 Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,7,0) * CFrame.Angles(math.rad(-90),0,0)
             elseif HitMethod == "Behind" then
                 Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,0,5)
             end
             Hit(v)
+            if v.Humanoid.Health > 0 then
+            local TweenService = game:GetService("TweenService")
+local Tw = TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(0, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0), 
+{CFrame = CFrame.new(2517, 704, 1674)}):Play()
+end
             for _,v in next, Player.Backpack:GetChildren() do
         if v:IsA("Tool") and v:FindFirstChild("Combat Script") then
             v.Parent = Player.Character
@@ -191,12 +201,17 @@ local KillBoss = function()
     for _,v in next, Workspace.Live:GetChildren() do
         if (table.find(Bosses, v.Name) and not BossFarm or v.Name == Boss and BossFarm) and v:FindFirstChild("HumanoidRootPart") then
             if v:FindFirstChild("Humanoid") and v.Humanoid.Health ~= 0 then
-                Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,-9,0) * CFrame.Angles(math.rad(90),0,0)
+                Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,-10,0) * CFrame.Angles(math.rad(90),0,0)
                             for _,v in next, Player.Backpack:GetChildren() do
         if v:IsA("Tool") and v:FindFirstChild("Combat Script") then
             v.Parent = Player.Character
         end
     end
+    if v.Humanoid.Health > 0 then
+            local TweenService = game:GetService("TweenService")
+local Tw = TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(0, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0), 
+{CFrame = CFrame.new(2517, 704, 1674)}):Play()
+end
                 Hit(v)
             end
         end
@@ -402,13 +417,13 @@ end
 end
 end
 if KillInsta then
-for _, v in pairs(Workspace.Live:GetDescendants()) do
-                if v:IsA("Model") and v.Name == Mob and v:FindFirstChild("Humanoid") and v.Humanoid.Health < v.Humanoid.MaxHealth then
-                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 112412400000)
-sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 112412400000)
-                            v.Humanoid.Health = 0
-                end
-                end
+for _,v in next, Workspace.Live:GetChildren() do
+        if v.Name == Mob and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+        if v.Humanoid.Health ~= v.Humanoid.MaxHealth then
+                v.Humanoid.Health = 0
+            end
+            end
+            end
                 end
                  
             if accessoryLeg then
