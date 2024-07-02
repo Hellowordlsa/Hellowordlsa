@@ -142,7 +142,6 @@ local KillMob = function(MobName,HitMethod)
                 Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,0,5)
             end
             Hit(v)
-            v.CharacterValues:Destroy()
             for _,v in next, Player.Backpack:GetChildren() do
         if v:IsA("Tool") and v:FindFirstChild("Combat Script") then
             v.Parent = Player.Character
@@ -191,7 +190,7 @@ end
 local KillBoss = function()
     for _,v in next, Workspace.Live:GetChildren() do
         if (table.find(Bosses, v.Name) and not BossFarm or v.Name == Boss and BossFarm) and v:FindFirstChild("HumanoidRootPart") then
-            if v:FindFirstChild("Humanoid") then
+            if v:FindFirstChild("Humanoid") and v.Humanoid.Health ~= 0 then
                 Player.Character.HumanoidRootPart.CFrame = CFrame.new(v.HumanoidRootPart.Position) * CFrame.new(0,-9,0) * CFrame.Angles(math.rad(90),0,0)
                             for _,v in next, Player.Backpack:GetChildren() do
         if v:IsA("Tool") and v:FindFirstChild("Combat Script") then
@@ -199,12 +198,6 @@ local KillBoss = function()
         end
     end
                 Hit(v)
-                v.CharacterValues:Destroy()
-                if v.Humanoid.Health ~= v.Humanoid.MaxHealth then
-                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 112412400000)
-sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 112412400000)
-                            v.Humanoid.Health = 0
-            end
             end
         end
     end
@@ -410,10 +403,10 @@ end
 end
 if KillInsta then
 for _, v in pairs(Workspace.Live:GetDescendants()) do
-                if v:IsA("Model") and v.Name == Mob and v:FindFirstChild("Humanoid") then
-                if v.Humanoid.Health ~= v.Humanoid.MaxHealth then
-                v.Humanoid.Health = 0
-            end
+                if v:IsA("Model") and v.Name == Mob and v:FindFirstChild("Humanoid") and v.Humanoid.Health < v.Humanoid.MaxHealth then
+                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 112412400000)
+sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 112412400000)
+                            v.Humanoid.Health = 0
                 end
                 end
                 end
@@ -561,7 +554,7 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 local Window = Fluent:CreateWindow({
-    Title = "OMG Hub | RE:XL",
+    Title = "OMG Hub | " .. MarketplaceService:GetProductInfo(game.PlaceId).Name,
     SubTitle = "by Omg",
     TabWidth = 160,
     Size = UDim2.fromOffset(530, 340),
