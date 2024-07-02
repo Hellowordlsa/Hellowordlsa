@@ -410,10 +410,10 @@ end
 end
 if KillInsta then
 for _, v in pairs(Workspace.Live:GetDescendants()) do
-                if v:IsA("Model") and v.Name == Mob and v:FindFirstChild("Humanoid") and v.Humanoid.Health < v.Humanoid.MaxHealth then
-                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 112412400000)
-sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 112412400000)
-                            v.Humanoid.Health = 0
+                if v:IsA("Model") and v.Name == Mob and v:FindFirstChild("Humanoid") then
+                if v.Humanoid.Health ~= v.Humanoid.MaxHealth then
+                v.Humanoid.Health = 0
+            end
                 end
                 end
                 end
